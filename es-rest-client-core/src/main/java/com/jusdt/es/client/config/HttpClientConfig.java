@@ -19,7 +19,7 @@ import org.apache.http.nio.conn.SchemeIOSessionStrategy;
 import org.apache.http.nio.conn.ssl.SSLIOSessionStrategy;
 
 import com.jusdt.es.common.client.config.ClientConfig;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 
 import java.net.ProxySelector;
 import java.util.Collection;
@@ -46,7 +46,7 @@ public class HttpClientConfig extends ClientConfig {
     private final SchemeIOSessionStrategy httpIOSessionStrategy;
     private final SchemeIOSessionStrategy httpsIOSessionStrategy;
     private Set<HttpHost> preemptiveAuthTargetHosts;
-    private final ElasticsearchVersion elasticsearchVersion;
+    private final ElasticSearchVersion elasticsearchVersion;
 
     public HttpClientConfig(Builder builder) {
         super(builder);
@@ -108,7 +108,7 @@ public class HttpClientConfig extends ClientConfig {
         return preemptiveAuthTargetHosts;
     }
 
-    public ElasticsearchVersion getElasticsearchVersion() {
+    public ElasticSearchVersion getElasticsearchVersion() {
         return elasticsearchVersion;
     }
 
@@ -125,7 +125,7 @@ public class HttpClientConfig extends ClientConfig {
         private SchemeIOSessionStrategy httpIOSessionStrategy;
         private SchemeIOSessionStrategy httpsIOSessionStrategy;
         private Set<HttpHost> preemptiveAuthTargetHosts = Collections.emptySet();
-        private ElasticsearchVersion elasticsearchVersion = ElasticsearchVersion.UNKNOWN;
+        private ElasticSearchVersion elasticsearchVersion = ElasticSearchVersion.UNKNOWN;
 
         public Builder(HttpClientConfig httpClientConfig) {
             super(httpClientConfig);
@@ -289,7 +289,7 @@ public class HttpClientConfig extends ClientConfig {
             return this;
         }
 
-        public Builder elasticsearchVersion(ElasticsearchVersion elasticsearchVersion) {
+        public Builder elasticsearchVersion(ElasticSearchVersion elasticsearchVersion) {
             this.elasticsearchVersion = elasticsearchVersion;
             return this;
         }

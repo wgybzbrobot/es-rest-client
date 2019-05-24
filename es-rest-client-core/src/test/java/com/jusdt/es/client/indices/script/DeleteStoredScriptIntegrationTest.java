@@ -8,7 +8,7 @@ import org.elasticsearch.test.ESIntegTestCase;
 import org.junit.Test;
 
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.indices.script.DeleteStoredScript;
 import com.jusdt.es.common.indices.script.ScriptLanguage;
 
@@ -28,7 +28,7 @@ public class DeleteStoredScriptIntegrationTest extends AbstractIntegrationTest {
 
 		DeleteStoredScript deleteStoredScript = new DeleteStoredScript.Builder(A_SCRIPT_NAME)
 				.setLanguage(ScriptLanguage.PAINLESS).build();
-		JestResult result = client.execute(deleteStoredScript);
+		QueryResult result = client.execute(deleteStoredScript);
 		assertTrue(result.getErrorMessage(), result.isSucceeded());
 
 		GetStoredScriptResponse getStoredScriptResponse = client().admin().cluster().prepareGetStoredScript()

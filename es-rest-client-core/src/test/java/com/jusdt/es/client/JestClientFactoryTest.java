@@ -26,7 +26,7 @@ import org.mockito.Mockito;
 import com.jusdt.es.client.JestClientFactory;
 import com.jusdt.es.client.config.HttpClientConfig;
 import com.jusdt.es.client.http.JestHttpClient;
-import com.jusdt.es.common.client.JestClient;
+import com.jusdt.es.common.client.ESClient;
 import com.jusdt.es.common.client.config.ClientConfig;
 import com.jusdt.es.common.client.config.NodeChecker;
 
@@ -142,7 +142,7 @@ public class JestClientFactoryTest {
 	}
 
 	class OtherNodeChecker extends NodeChecker {
-		public OtherNodeChecker(JestClient jestClient, ClientConfig clientConfig) {
+		public OtherNodeChecker(ESClient jestClient, ClientConfig clientConfig) {
 			super(jestClient, clientConfig);
 		}
 	}

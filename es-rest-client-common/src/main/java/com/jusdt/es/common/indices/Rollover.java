@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.jusdt.es.common.action.AbstractAction;
 import com.jusdt.es.common.action.GenericResultAbstractAction;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 
 public class Rollover extends GenericResultAbstractAction {
 
@@ -33,7 +33,7 @@ public class Rollover extends GenericResultAbstractAction {
     }
 
     @Override
-    protected String buildURI(ElasticsearchVersion elasticsearchVersion) {
+    protected String buildURI(ElasticSearchVersion elasticsearchVersion) {
         return super.buildURI(elasticsearchVersion) + "/_rollover" + (isDryRun ? "?dry_run" : "");
     }
 

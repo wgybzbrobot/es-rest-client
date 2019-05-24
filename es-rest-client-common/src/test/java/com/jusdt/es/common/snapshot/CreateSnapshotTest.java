@@ -1,7 +1,7 @@
 package com.jusdt.es.common.snapshot;
 
 import com.google.gson.Gson;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.snapshot.CreateSnapshot;
 
 import org.json.JSONException;
@@ -25,7 +25,7 @@ public class CreateSnapshotTest {
     public void testSnapshot() {
         CreateSnapshot createSnapshot = new CreateSnapshot.Builder(repository, snapshot).waitForCompletion(true).build();
         assertEquals("PUT", createSnapshot.getRestMethodName());
-        assertEquals("/_snapshot/leeseohoo/leeseola?wait_for_completion=true", createSnapshot.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("/_snapshot/leeseohoo/leeseola?wait_for_completion=true", createSnapshot.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
@@ -43,7 +43,7 @@ public class CreateSnapshotTest {
                 .build();
 
         assertEquals("PUT", createSnapshot.getRestMethodName());
-        assertEquals("/_snapshot/leeseohoo/leeseola?wait_for_completion=true", createSnapshot.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("/_snapshot/leeseohoo/leeseola?wait_for_completion=true", createSnapshot.getURI(ElasticSearchVersion.UNKNOWN));
         String settings = createSnapshot.getData(new Gson());
 
         String expectedJSON = "{\n" +

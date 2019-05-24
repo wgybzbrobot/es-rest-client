@@ -21,10 +21,7 @@ import com.jusdt.es.common.client.config.IdleConnectionReaper;
 import com.jusdt.es.common.client.config.NoServerConfiguredException;
 import com.jusdt.es.common.client.config.NodeChecker;
 
-/**
- * @author Dogukan Sonmez
- */
-public abstract class AbstractJestClient implements JestClient {
+public abstract class AbstractJestClient implements ESClient {
 
 	public static final String ELASTIC_SEARCH_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
 
@@ -80,6 +77,7 @@ public abstract class AbstractJestClient implements JestClient {
 				log.debug("Couldn't scrub server URI " + originalURI, e);
 			}
 		}
+
 		return scrubbedServers.build();
 	}
 
@@ -138,6 +136,7 @@ public abstract class AbstractJestClient implements JestClient {
 	}
 
 	private static final class ServerPool {
+
 		private final List<String> serversRing;
 		private final AtomicInteger nextServerIndex = new AtomicInteger(0);
 
@@ -170,5 +169,7 @@ public abstract class AbstractJestClient implements JestClient {
 		public int getSize() {
 			return serversRing.size();
 		}
+
 	}
+
 }

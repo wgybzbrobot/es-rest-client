@@ -7,7 +7,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.indices.ForceMerge;
 
 import java.io.IOException;
@@ -26,7 +26,7 @@ public class ForceMergeIntegrationTest extends AbstractIntegrationTest {
     @Test
     public void testForceMergeDefault() throws InterruptedException, ExecutionException, TimeoutException, IOException {
         ForceMerge forceMerge = new ForceMerge.Builder().maxNumSegments(1).build();
-        JestResult result = client.execute(forceMerge);
+        QueryResult result = client.execute(forceMerge);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         IndicesStatsResponse statsResponse = client().admin().indices().stats(

@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.indices.Flush;
 
 import java.io.IOException;
@@ -34,7 +34,7 @@ public class FlushIntegrationTest extends AbstractIntegrationTest {
     @Test
     public void testFlushAll() throws InterruptedException, ExecutionException, TimeoutException, IOException {
         Flush flush = new Flush.Builder().build();
-        JestResult result = client.execute(flush);
+        QueryResult result = client.execute(flush);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         IndicesStatsResponse statsResponse = client().admin().indices().stats(
@@ -49,7 +49,7 @@ public class FlushIntegrationTest extends AbstractIntegrationTest {
     @Test
     public void testFlushWithForce() throws InterruptedException, ExecutionException, TimeoutException, IOException {
         Flush flush = new Flush.Builder().force().build();
-        JestResult result = client.execute(flush);
+        QueryResult result = client.execute(flush);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         IndicesStatsResponse statsResponse = client().admin().indices().stats(
@@ -64,7 +64,7 @@ public class FlushIntegrationTest extends AbstractIntegrationTest {
     @Test
     public void testFlushWithWaitifOngoing() throws InterruptedException, ExecutionException, TimeoutException, IOException {
         Flush flush = new Flush.Builder().waitIfOngoing().build();
-        JestResult result = client.execute(flush);
+        QueryResult result = client.execute(flush);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         IndicesStatsResponse statsResponse = client().admin().indices().stats(
@@ -79,7 +79,7 @@ public class FlushIntegrationTest extends AbstractIntegrationTest {
     @Test
     public void testFlushSpecificIndices() throws InterruptedException, ExecutionException, TimeoutException, IOException {
         Flush flush = new Flush.Builder().addIndex(INDEX_NAME_2).addIndex(INDEX_NAME_3).build();
-        JestResult result = client.execute(flush);
+        QueryResult result = client.execute(flush);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         IndicesStatsResponse statsResponse = client().admin().indices().stats(

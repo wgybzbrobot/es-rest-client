@@ -8,7 +8,7 @@ import org.elasticsearch.common.xcontent.XContentType;
 import org.junit.Test;
 
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.indices.script.GetStoredScript;
 import com.jusdt.es.common.indices.script.ScriptLanguage;
 
@@ -28,7 +28,7 @@ public class GetStoredScriptIntegrationTest extends AbstractIntegrationTest {
 
 		GetStoredScript getStoredScript = new GetStoredScript.Builder(name).setLanguage(ScriptLanguage.PAINLESS)
 				.build();
-		JestResult result = client.execute(getStoredScript);
+		QueryResult result = client.execute(getStoredScript);
 		assertTrue(result.getErrorMessage(), result.isSucceeded());
 	}
 

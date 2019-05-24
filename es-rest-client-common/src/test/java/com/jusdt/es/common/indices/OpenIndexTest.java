@@ -2,7 +2,7 @@ package com.jusdt.es.common.indices;
 
 import org.junit.Test;
 
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.indices.OpenIndex;
 
 import static org.junit.Assert.assertEquals;
@@ -15,7 +15,7 @@ public class OpenIndexTest {
         OpenIndex openIndex = new OpenIndex.Builder("twitter").build();
 
         assertEquals("POST", openIndex.getRestMethodName());
-        assertEquals("twitter/_open", openIndex.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("twitter/_open", openIndex.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test

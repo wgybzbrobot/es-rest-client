@@ -2,7 +2,7 @@ package com.jusdt.es.client.cluster;
 
 import com.google.gson.JsonObject;
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.cluster.Stats;
 
 import org.elasticsearch.test.ESIntegTestCase;
@@ -14,7 +14,7 @@ import java.io.IOException;
 public class StatsIntegrationTest extends AbstractIntegrationTest {
     @Test
     public void clusterStats() throws IOException {
-        JestResult result = client.execute(new Stats.Builder().build());
+        QueryResult result = client.execute(new Stats.Builder().build());
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         JsonObject resultJson = result.getJsonObject();
@@ -31,7 +31,7 @@ public class StatsIntegrationTest extends AbstractIntegrationTest {
     @Test
     public void clusterStatsWithSpecificNodes() throws IOException {
         final String localNodeName = clusterService().localNode().getName();
-        JestResult result = client.execute(new Stats.Builder().addNode(localNodeName).build());
+        QueryResult result = client.execute(new Stats.Builder().addNode(localNodeName).build());
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         JsonObject resultJson = result.getJsonObject();

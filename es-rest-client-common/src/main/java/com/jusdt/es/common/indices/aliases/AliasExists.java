@@ -2,7 +2,7 @@ package com.jusdt.es.common.indices.aliases;
 
 import com.jusdt.es.common.action.AbstractMultiIndexActionBuilder;
 import com.jusdt.es.common.action.GenericResultAbstractAction;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 
 public class AliasExists extends GenericResultAbstractAction {
     private String alias;
@@ -18,7 +18,7 @@ public class AliasExists extends GenericResultAbstractAction {
     }
 
     @Override
-    protected String buildURI(ElasticsearchVersion elasticsearchVersion) {
+    protected String buildURI(ElasticSearchVersion elasticsearchVersion) {
         return super.buildURI(elasticsearchVersion) + "/_alias/" + alias;
     }
 

@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.jusdt.es.common.action.AbstractAction;
 import com.jusdt.es.common.action.GenericResultAbstractAction;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.params.Parameters;
 
 public class FieldCapabilities extends GenericResultAbstractAction {
@@ -26,7 +26,7 @@ public class FieldCapabilities extends GenericResultAbstractAction {
     }
 
     @Override
-    protected String buildURI(ElasticsearchVersion elasticsearchVersion) {
+    protected String buildURI(ElasticSearchVersion elasticsearchVersion) {
         String buildURI = super.buildURI(elasticsearchVersion);
         if (buildURI.isEmpty())
             return "_field_caps";

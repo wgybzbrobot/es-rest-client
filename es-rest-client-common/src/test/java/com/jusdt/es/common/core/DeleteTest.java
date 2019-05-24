@@ -2,7 +2,7 @@ package com.jusdt.es.common.core;
 
 import org.junit.Test;
 
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.core.Delete;
 import com.jusdt.es.common.params.Parameters;
 
@@ -49,7 +49,7 @@ public class DeleteTest {
                 .type("tweet")
                 .build();
         assertEquals("DELETE", delete.getRestMethodName());
-        assertEquals("twitter/tweet/1", delete.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("twitter/tweet/1", delete.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
@@ -60,6 +60,6 @@ public class DeleteTest {
                 .setParameter(Parameters.VERSION, 1)
                 .build();
         assertEquals("DELETE", delete.getRestMethodName());
-        assertEquals("twitter/tweet/1?version=1", delete.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("twitter/tweet/1?version=1", delete.getURI(ElasticSearchVersion.UNKNOWN));
     }
 }

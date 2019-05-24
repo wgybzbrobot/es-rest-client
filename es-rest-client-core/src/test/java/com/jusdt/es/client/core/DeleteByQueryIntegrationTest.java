@@ -6,7 +6,7 @@ import org.elasticsearch.test.ESIntegTestCase;
 import org.junit.Test;
 
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.core.DeleteByQuery;
 
 import java.io.IOException;
@@ -44,7 +44,7 @@ public class DeleteByQueryIntegrationTest extends AbstractIntegrationTest {
                 .addType("tweet")
                 .build();
 
-        JestResult result = client.execute(deleteByQuery);
+        QueryResult result = client.execute(deleteByQuery);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         assertEquals(

@@ -2,7 +2,7 @@ package com.jusdt.es.common.indices;
 
 import com.jusdt.es.common.action.AbstractMultiIndexActionBuilder;
 import com.jusdt.es.common.action.GenericResultAbstractAction;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 
 /**
  * Optimize API: https://www.elastic.co/guide/en/elasticsearch/reference/2.4/indices-optimize.html
@@ -24,7 +24,7 @@ public class Optimize extends GenericResultAbstractAction {
     }
 
     @Override
-    protected String buildURI(ElasticsearchVersion elasticsearchVersion) {
+    protected String buildURI(ElasticSearchVersion elasticsearchVersion) {
         return super.buildURI(elasticsearchVersion) + "/_optimize";
     }
 

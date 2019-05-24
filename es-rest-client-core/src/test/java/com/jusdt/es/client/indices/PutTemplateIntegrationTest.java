@@ -5,7 +5,7 @@ import org.elasticsearch.test.ESIntegTestCase;
 import org.junit.Test;
 
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.indices.template.GetTemplate;
 import com.jusdt.es.common.indices.template.PutTemplate;
 
@@ -34,7 +34,7 @@ public class PutTemplateIntegrationTest extends AbstractIntegrationTest {
                         "}")
                 .build();
 
-        JestResult result = client.execute(putTemplate);
+        QueryResult result = client.execute(putTemplate);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         GetTemplate getTemplate = new GetTemplate.Builder("new_template_1").build();

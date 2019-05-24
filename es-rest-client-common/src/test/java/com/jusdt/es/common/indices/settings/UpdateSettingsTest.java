@@ -2,7 +2,7 @@ package com.jusdt.es.common.indices.settings;
 
 import org.junit.Test;
 
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.indices.settings.UpdateSettings;
 
 import static org.junit.Assert.assertEquals;
@@ -15,7 +15,7 @@ public class UpdateSettingsTest {
         String expectedUri = "_all/_settings";
 
         UpdateSettings updateSettings = new UpdateSettings.Builder("").build();
-        assertEquals(expectedUri, updateSettings.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals(expectedUri, updateSettings.getURI(ElasticSearchVersion.UNKNOWN));
         assertEquals("", updateSettings.getData(null));
         assertEquals("PUT", updateSettings.getRestMethodName());
     }

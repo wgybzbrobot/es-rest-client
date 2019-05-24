@@ -5,7 +5,7 @@ import org.elasticsearch.test.ESIntegTestCase;
 import org.junit.Test;
 
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.indices.CloseIndex;
 
 import java.io.IOException;
@@ -32,7 +32,7 @@ public class CloseIndexIntegrationTest extends AbstractIntegrationTest {
         );
 
         CloseIndex closeIndex = new CloseIndex.Builder(INDEX_NAME_2).build();
-        JestResult result = client.execute(closeIndex);
+        QueryResult result = client.execute(closeIndex);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         ensureGreen(INDEX_NAME_1);

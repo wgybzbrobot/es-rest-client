@@ -1,7 +1,7 @@
 package com.jusdt.es.common.indices;
 
 import com.jusdt.es.common.action.GenericResultAbstractAction;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 
 /**
  * @author cihat keser
@@ -15,7 +15,7 @@ public class CloseIndex extends GenericResultAbstractAction {
     }
 
     @Override
-    protected String buildURI(ElasticsearchVersion elasticsearchVersion) {
+    protected String buildURI(ElasticSearchVersion elasticsearchVersion) {
         return super.buildURI(elasticsearchVersion) + "/_close";
     }
 

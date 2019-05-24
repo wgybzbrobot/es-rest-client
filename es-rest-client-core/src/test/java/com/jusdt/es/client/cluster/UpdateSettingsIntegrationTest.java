@@ -5,7 +5,7 @@ import org.elasticsearch.test.ESIntegTestCase;
 import org.junit.Test;
 
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.cluster.UpdateSettings;
 
 import java.io.IOException;
@@ -20,7 +20,7 @@ public class UpdateSettingsIntegrationTest extends AbstractIntegrationTest {
     @Test
     public void nullSourceShouldFailOnServer() throws IOException {
         UpdateSettings updateSettings = new UpdateSettings.Builder(null).build();
-        JestResult result = client.execute(updateSettings);
+        QueryResult result = client.execute(updateSettings);
         assertFalse(result.isSucceeded());
     }
 
@@ -33,7 +33,7 @@ public class UpdateSettingsIntegrationTest extends AbstractIntegrationTest {
                 "}";
 
         UpdateSettings updateSettings = new UpdateSettings.Builder(source).build();
-        JestResult result = client.execute(updateSettings);
+        QueryResult result = client.execute(updateSettings);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         Map updatedSettings = result.getSourceAsObject(Map.class);

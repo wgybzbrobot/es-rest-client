@@ -2,7 +2,7 @@ package com.jusdt.es.common.indices.type;
 
 import com.jusdt.es.common.action.AbstractMultiTypeActionBuilder;
 import com.jusdt.es.common.action.GenericResultAbstractAction;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 
 /**
  * @author happyprg(hongsgo @ gmail.com)
@@ -15,7 +15,7 @@ public class TypeExist extends GenericResultAbstractAction {
     }
 
     @Override
-    protected String getURLCommandExtension(ElasticsearchVersion elasticsearchVersion) {
+    protected String getURLCommandExtension(ElasticSearchVersion elasticsearchVersion) {
         return "_mapping";
     }
 

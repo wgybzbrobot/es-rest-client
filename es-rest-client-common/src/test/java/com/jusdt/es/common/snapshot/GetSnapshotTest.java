@@ -2,7 +2,7 @@ package com.jusdt.es.common.snapshot;
 
 import org.junit.Test;
 
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.snapshot.GetSnapshot;
 
 import java.util.Arrays;
@@ -21,13 +21,13 @@ public class GetSnapshotTest {
     @Test
     public void testSnapshotMultipleNames() {
         GetSnapshot getSnapshotRepository = new GetSnapshot.Builder(repository).addSnapshot(Arrays.asList(snapshot, snapshot2)).build();
-        assertEquals("/_snapshot/kangsungjeon/leeseohoo,kangsungjeon", getSnapshotRepository.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("/_snapshot/kangsungjeon/leeseohoo,kangsungjeon", getSnapshotRepository.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
     public void testSnapshotAll() {
         GetSnapshot getSnapshotRepository = new GetSnapshot.Builder(repository).build();
-        assertEquals("/_snapshot/kangsungjeon/_all", getSnapshotRepository.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("/_snapshot/kangsungjeon/_all", getSnapshotRepository.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
 }

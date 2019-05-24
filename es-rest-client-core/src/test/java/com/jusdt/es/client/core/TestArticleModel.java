@@ -1,12 +1,12 @@
 package com.jusdt.es.client.core;
 
-import com.jusdt.es.common.annotations.JestId;
+import com.jusdt.es.common.annotations.ESClientId;
 
 /**
  * @author ferhat sobay
  */
 public class TestArticleModel {
-    @JestId
+    @ESClientId
     private String id;
     private String name;
 

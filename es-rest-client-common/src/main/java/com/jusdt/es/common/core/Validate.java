@@ -1,12 +1,8 @@
 package com.jusdt.es.common.core;
 
 import com.jusdt.es.common.action.GenericResultAbstractAction;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 
-/**
- * @author Dogukan Sonmez
- * @author cihat keser
- */
 public class Validate extends GenericResultAbstractAction {
 
     protected Validate(Builder builder) {
@@ -18,7 +14,7 @@ public class Validate extends GenericResultAbstractAction {
     }
 
     @Override
-    protected String buildURI(ElasticsearchVersion elasticsearchVersion) {
+    protected String buildURI(ElasticSearchVersion elasticsearchVersion) {
         return super.buildURI(elasticsearchVersion) + "/_validate/query";
     }
 
@@ -33,6 +29,7 @@ public class Validate extends GenericResultAbstractAction {
     }
 
     public static class Builder extends GenericResultAbstractAction.Builder<Validate, Builder> {
+    	
         private final Object query;
         private String index;
         private String type;
@@ -54,5 +51,7 @@ public class Validate extends GenericResultAbstractAction {
         public Validate build() {
             return new Validate(this);
         }
+        
     }
+    
 }

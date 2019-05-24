@@ -1,43 +1,40 @@
 package com.jusdt.es.common.core;
 
-import com.google.gson.Gson;
-import com.jusdt.es.common.client.JestResult;
-
 import java.util.List;
 
-/**
- * @author cihat.keser
- */
-public class CountResult extends JestResult {
+import com.google.gson.Gson;
+import com.jusdt.es.common.client.QueryResult;
 
-    public CountResult(CountResult countResult) {
-        super(countResult);
-    }
+public class CountResult extends QueryResult {
 
-    public CountResult(Gson gson) {
-        super(gson);
-    }
+	public CountResult(CountResult countResult) {
+		super(countResult);
+	}
 
-    @Override
-    @Deprecated
-    public <T> T getSourceAsObject(Class<T> clazz) {
-        return super.getSourceAsObject(clazz);
-    }
+	public CountResult(Gson gson) {
+		super(gson);
+	}
 
-    @Override
-    @Deprecated
-    public <T> List<T> getSourceAsObjectList(Class<T> type) {
-        return super.getSourceAsObjectList(type);
-    }
+	@Override
+	@Deprecated
+	public <T> T getSourceAsObject(Class<T> clazz) {
+		return super.getSourceAsObject(clazz);
+	}
 
-    public Double getCount() {
-        Double count = null;
+	@Override
+	@Deprecated
+	public <T> List<T> getSourceAsObjectList(Class<T> type) {
+		return super.getSourceAsObjectList(type);
+	}
 
-        if (isSucceeded) {
-            count = getSourceAsObject(Double.class);
-        }
+	public Double getCount() {
+		Double count = null;
 
-        return count;
-    }
+		if (isSucceeded) {
+			count = getSourceAsObject(Double.class);
+		}
+
+		return count;
+	}
 
 }

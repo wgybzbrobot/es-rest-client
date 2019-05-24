@@ -2,7 +2,7 @@ package com.jusdt.es.common.cluster;
 
 import org.junit.Test;
 
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.cluster.NodesInfo;
 
 import static org.junit.Assert.assertEquals;
@@ -15,37 +15,37 @@ public class NodesInfoTest {
     @Test
     public void getURIWithoutNodeAndInfo() {
         NodesInfo nodesInfo = new NodesInfo.Builder().build();
-        assertEquals("/_nodes/_all", nodesInfo.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("/_nodes/_all", nodesInfo.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
     public void getURIWithOnlyOneNode() {
         NodesInfo nodesInfo = new NodesInfo.Builder().addNode("twitter").build();
-        assertEquals("/_nodes/twitter", nodesInfo.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("/_nodes/twitter", nodesInfo.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
     public void getURIWithOneNodeAndOneInfo() {
         NodesInfo nodesInfo = new NodesInfo.Builder().addNode("twitter").withOs().build();
-        assertEquals("/_nodes/twitter/os", nodesInfo.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("/_nodes/twitter/os", nodesInfo.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
     public void getURIWithOnlyOneType() {
         NodesInfo nodesInfo = new NodesInfo.Builder().withOs().build();
-        assertEquals("/_nodes/_all/os", nodesInfo.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("/_nodes/_all/os", nodesInfo.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
     public void getURIWithOnlyMultipleNode() {
         NodesInfo nodesInfo = new NodesInfo.Builder().addNode("twitter").addNode("searchbox").build();
-        assertEquals("/_nodes/twitter,searchbox", nodesInfo.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("/_nodes/twitter,searchbox", nodesInfo.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
     public void getURIWithOnlyMultipleType() {
         NodesInfo nodesInfo = new NodesInfo.Builder().withOs().withProcess().build();
-        assertEquals("/_nodes/_all/os,process", nodesInfo.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("/_nodes/_all/os,process", nodesInfo.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
@@ -57,7 +57,7 @@ public class NodesInfoTest {
                 .withProcess()
                 .withSettings()
                 .build();
-        assertEquals("/_nodes/twitter,jest/os,process,settings", nodesInfo.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("/_nodes/twitter,jest/os,process,settings", nodesInfo.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
 }

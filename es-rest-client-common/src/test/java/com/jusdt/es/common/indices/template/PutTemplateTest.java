@@ -2,7 +2,7 @@ package com.jusdt.es.common.indices.template;
 
 import org.junit.Test;
 
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.indices.template.PutTemplate;
 
 import static org.junit.Assert.assertEquals;
@@ -15,7 +15,7 @@ public class PutTemplateTest {
         PutTemplate putTemplate = new PutTemplate.Builder("sponsored_tweet", new Object()).build();
 
         assertEquals("PUT", putTemplate.getRestMethodName());
-        assertEquals("_template/sponsored_tweet", putTemplate.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("_template/sponsored_tweet", putTemplate.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test

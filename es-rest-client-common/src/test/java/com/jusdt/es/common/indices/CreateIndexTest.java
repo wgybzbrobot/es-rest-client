@@ -1,7 +1,7 @@
 package com.jusdt.es.common.indices;
 
 import com.google.gson.Gson;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.indices.CreateIndex;
 
 import org.junit.Test;
@@ -21,7 +21,7 @@ public class CreateIndexTest {
     public void createIndexWithoutSettings() {
         CreateIndex createIndex = new CreateIndex.Builder("tweet").build();
 
-        assertEquals("tweet", createIndex.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("tweet", createIndex.getURI(ElasticSearchVersion.UNKNOWN));
         assertEquals("PUT", createIndex.getRestMethodName());
 
         String settings = new Gson().toJson(createIndex.getData(new Gson()));

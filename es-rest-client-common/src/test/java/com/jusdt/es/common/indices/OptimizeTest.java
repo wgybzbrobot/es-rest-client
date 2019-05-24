@@ -2,7 +2,7 @@ package com.jusdt.es.common.indices;
 
 import org.junit.Test;
 
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.indices.Optimize;
 
 import static org.junit.Assert.assertEquals;
@@ -15,7 +15,7 @@ public class OptimizeTest {
         Optimize optimize = new Optimize.Builder().addIndex("twitter").build();
 
         assertEquals("POST", optimize.getRestMethodName());
-        assertEquals("twitter/_optimize", optimize.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("twitter/_optimize", optimize.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test

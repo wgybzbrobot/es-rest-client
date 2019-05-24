@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 import com.google.gson.Gson;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.core.Bulk;
 import com.jusdt.es.common.core.Delete;
 import com.jusdt.es.common.core.Index;
@@ -106,14 +106,14 @@ public class BulkTest {
     @Test
     public void testUris() {
         Bulk bulkWitIndex = new Bulk.Builder().defaultIndex("twitter").build();
-        assertEquals("twitter/_bulk", bulkWitIndex.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("twitter/_bulk", bulkWitIndex.getURI(ElasticSearchVersion.UNKNOWN));
 
         Bulk bulkWitIndexAndType = new Bulk.Builder().defaultIndex("twitter").defaultType("tweet").build();
-        assertEquals("twitter/tweet/_bulk", bulkWitIndexAndType.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("twitter/tweet/_bulk", bulkWitIndexAndType.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     private void executeAsserts(Bulk bulk) {
         assertEquals("POST", bulk.getRestMethodName());
-        assertEquals("/_bulk", bulk.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("/_bulk", bulk.getURI(ElasticSearchVersion.UNKNOWN));
     }
 }

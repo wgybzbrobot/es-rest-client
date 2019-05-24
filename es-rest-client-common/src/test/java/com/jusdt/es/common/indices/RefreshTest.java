@@ -2,7 +2,7 @@ package com.jusdt.es.common.indices;
 
 import org.junit.Test;
 
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.indices.Refresh;
 
 import static org.junit.Assert.assertEquals;
@@ -15,7 +15,7 @@ public class RefreshTest {
         Refresh refresh = new Refresh.Builder().addIndex("twitter").addIndex("myspace").build();
 
         assertEquals("POST", refresh.getRestMethodName());
-        assertEquals("twitter%2Cmyspace/_refresh", refresh.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("twitter%2Cmyspace/_refresh", refresh.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test

@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import com.jusdt.es.client.common.AbstractIntegrationTest;
 import com.jusdt.es.common.action.Action;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.indices.type.TypeExist;
 
 import java.io.IOException;
@@ -45,7 +45,7 @@ public class TypeExistIntegrationTest extends AbstractIntegrationTest {
         assertTrue(indexResponse.getResult().equals(CREATED));
 
         Action typeExist = new TypeExist.Builder(INDEX_NAME).addType(EXISTING_INDEX_TYPE).build();
-        JestResult result = client.execute(typeExist);
+        QueryResult result = client.execute(typeExist);
 
         assertTrue(result.getErrorMessage(), result.isSucceeded());
     }
@@ -54,7 +54,7 @@ public class TypeExistIntegrationTest extends AbstractIntegrationTest {
     public void indexTypeNotExists() throws IOException {
         Action typeExist = new TypeExist.Builder(INDEX_NAME).addType(NON_EXISTING_INDEX_TYPE).build();
 
-        JestResult result = client.execute(typeExist);
+        QueryResult result = client.execute(typeExist);
         assertFalse(result.isSucceeded());
     }
 

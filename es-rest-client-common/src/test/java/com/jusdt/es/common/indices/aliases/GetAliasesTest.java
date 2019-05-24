@@ -3,7 +3,7 @@ package com.jusdt.es.common.indices.aliases;
 import java.util.Arrays;
 import org.junit.Test;
 
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.indices.aliases.GetAliases;
 
 import static org.junit.Assert.assertEquals;
@@ -16,7 +16,7 @@ public class GetAliasesTest {
         GetAliases getAliases = new GetAliases.Builder().addIndex("twitter").build();
 
         assertEquals("GET", getAliases.getRestMethodName());
-        assertEquals("twitter/_alias", getAliases.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("twitter/_alias", getAliases.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
@@ -24,7 +24,7 @@ public class GetAliasesTest {
         GetAliases getAliases = new GetAliases.Builder().addIndex("twitter").addAlias("alias").build();
 
         assertEquals("GET", getAliases.getRestMethodName());
-        assertEquals("twitter/_alias/alias", getAliases.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("twitter/_alias/alias", getAliases.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
@@ -32,7 +32,7 @@ public class GetAliasesTest {
         GetAliases getAliases = new GetAliases.Builder().addIndex("twitter").addAliases(Arrays.asList(new String[]{"alias1", "alias2"})).build();
 
         assertEquals("GET", getAliases.getRestMethodName());
-        assertEquals("twitter/_alias/alias1,alias2", getAliases.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("twitter/_alias/alias1,alias2", getAliases.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test

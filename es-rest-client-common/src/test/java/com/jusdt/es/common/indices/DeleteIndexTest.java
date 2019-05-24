@@ -2,7 +2,7 @@ package com.jusdt.es.common.indices;
 
 import org.junit.Test;
 
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.indices.DeleteIndex;
 
 import static org.junit.Assert.assertEquals;
@@ -18,7 +18,7 @@ public class DeleteIndexTest {
         DeleteIndex delete = new DeleteIndex.Builder("twitter").build();
 
         assertEquals("DELETE", delete.getRestMethodName());
-        assertEquals("twitter", delete.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("twitter", delete.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
@@ -26,7 +26,7 @@ public class DeleteIndexTest {
         DeleteIndex delete = new DeleteIndex.Builder("twitter").type("tweet").build();
 
         assertEquals("DELETE", delete.getRestMethodName());
-        assertEquals("twitter/tweet", delete.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("twitter/tweet", delete.getURI(ElasticSearchVersion.UNKNOWN));
 
     }
 

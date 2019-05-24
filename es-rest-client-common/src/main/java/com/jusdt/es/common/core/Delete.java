@@ -3,10 +3,6 @@ package com.jusdt.es.common.core;
 import com.jusdt.es.common.action.BulkableAction;
 import com.jusdt.es.common.action.SingleResultAbstractDocumentTargetedAction;
 
-/**
- * @author Dogukan Sonmez
- * @author cihat keser
- */
 public class Delete extends SingleResultAbstractDocumentTargetedAction implements BulkableAction<DocumentResult> {
 
     protected Delete(Builder builder) {
@@ -39,4 +35,5 @@ public class Delete extends SingleResultAbstractDocumentTargetedAction implement
         }
 
     }
+    
 }

@@ -1,12 +1,8 @@
 package com.jusdt.es.common.core;
 
 import com.jusdt.es.common.action.SingleResultAbstractDocumentTargetedAction;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 
-/**
- * @author Dogukan Sonmez
- * @author cihat keser
- */
 public class Explain extends SingleResultAbstractDocumentTargetedAction {
 
     protected Explain(Builder builder) {
@@ -20,7 +16,7 @@ public class Explain extends SingleResultAbstractDocumentTargetedAction {
     }
 
     @Override
-    protected String buildURI(ElasticsearchVersion elasticsearchVersion) {
+    protected String buildURI(ElasticSearchVersion elasticsearchVersion) {
         return super.buildURI(elasticsearchVersion) + "/_explain";
     }
 
@@ -37,7 +33,6 @@ public class Explain extends SingleResultAbstractDocumentTargetedAction {
         public Explain build() {
             return new Explain(this);
         }
-
     }
 
 }

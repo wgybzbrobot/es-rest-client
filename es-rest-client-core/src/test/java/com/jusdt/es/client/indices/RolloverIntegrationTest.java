@@ -5,7 +5,7 @@ import org.elasticsearch.test.ESIntegTestCase;
 import org.junit.Test;
 
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.indices.CreateIndex;
 import com.jusdt.es.common.indices.Rollover;
 
@@ -25,7 +25,7 @@ public class RolloverIntegrationTest extends AbstractIntegrationTest {
         String aliasSetting = "{ \"rollover-test-index\": {} }";
         CreateIndex createIndex = new CreateIndex.Builder("rollover-test-index-000001").aliases(aliasSetting).build();
 
-        JestResult result = client.execute(createIndex);
+        QueryResult result = client.execute(createIndex);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         Rollover rollover = new Rollover.Builder("rollover-test-index").conditions(rolloverConditions).build();

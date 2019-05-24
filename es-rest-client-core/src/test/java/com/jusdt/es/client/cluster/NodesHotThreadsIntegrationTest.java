@@ -4,7 +4,7 @@ import org.elasticsearch.test.ESIntegTestCase;
 import org.junit.Test;
 
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.cluster.NodesHotThreads;
 
 import java.io.IOException;
@@ -20,7 +20,7 @@ public class NodesHotThreadsIntegrationTest extends AbstractIntegrationTest {
         String firstNode = internalCluster().getNodeNames()[0];
         String secondNode = internalCluster().getNodeNames()[1];
 
-        JestResult result = client.execute(new NodesHotThreads.Builder().build());
+        QueryResult result = client.execute(new NodesHotThreads.Builder().build());
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         assertTrue(result.getJsonString().contains("interval=500ms"));
@@ -33,7 +33,7 @@ public class NodesHotThreadsIntegrationTest extends AbstractIntegrationTest {
         String firstNode = internalCluster().getNodeNames()[0];
         String secondNode = internalCluster().getNodeNames()[1];
 
-        JestResult result = client.execute(new NodesHotThreads.Builder().addNode(firstNode).build());
+        QueryResult result = client.execute(new NodesHotThreads.Builder().addNode(firstNode).build());
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         assertNodePresent(result, firstNode);
@@ -45,7 +45,7 @@ public class NodesHotThreadsIntegrationTest extends AbstractIntegrationTest {
         String firstNode = internalCluster().getNodeNames()[0];
         String secondNode = internalCluster().getNodeNames()[1];
 
-        JestResult result = client.execute(new NodesHotThreads.Builder()
+        QueryResult result = client.execute(new NodesHotThreads.Builder()
                 .addNode(firstNode)
                 .interval("100ms")
                 .build());
@@ -57,11 +57,11 @@ public class NodesHotThreadsIntegrationTest extends AbstractIntegrationTest {
         assertNodeMissing(result, secondNode);
     }
 
-    private void assertNodePresent(JestResult result, String node) {
+    private void assertNodePresent(QueryResult result, String node) {
         assertTrue(result.getJsonString().contains("::: {" + node + "}{"));
     }
 
-    private void assertNodeMissing(JestResult result, String node) {
+    private void assertNodeMissing(QueryResult result, String node) {
         assertFalse(result.getJsonString().contains("::: {" + node + "}{"));
     }
 

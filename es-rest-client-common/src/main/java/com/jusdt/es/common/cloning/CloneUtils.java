@@ -1,44 +1,50 @@
 package com.jusdt.es.common.cloning;
 
-import com.google.gson.*;
-
 import java.util.Map;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 /**
  * This class is just a workaround for the non-public deepCopy methods in Gson.
  */
 public class CloneUtils {
-    public static JsonElement deepClone(JsonElement jsonElement) {
-        if (jsonElement instanceof JsonObject) {
-            return deepCloneObject(jsonElement);
-        } else if (jsonElement instanceof JsonArray) {
-            return deepCloneArray(jsonElement);
-        } else if (jsonElement instanceof JsonPrimitive) {
-            return jsonElement;
-        }
 
-        return JsonNull.INSTANCE;
-    }
+	public static JsonElement deepClone(JsonElement jsonElement) {
+		if (jsonElement instanceof JsonObject) {
+			return deepCloneObject(jsonElement);
+		} else if (jsonElement instanceof JsonArray) {
+			return deepCloneArray(jsonElement);
+		} else if (jsonElement instanceof JsonPrimitive) {
+			return jsonElement;
+		}
 
-    private static JsonElement deepCloneObject(JsonElement jsonElement) {
-        JsonObject jsonObject = (JsonObject) jsonElement;
-        JsonObject result = new JsonObject();
+		return JsonNull.INSTANCE;
+	}
 
-        for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
-            result.add(entry.getKey(), deepClone(entry.getValue()));
-        }
+	private static JsonElement deepCloneObject(JsonElement jsonElement) {
+		JsonObject jsonObject = (JsonObject) jsonElement;
+		JsonObject result = new JsonObject();
 
-        return result;
-    }
+		for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
+			result.add(entry.getKey(), deepClone(entry.getValue()));
+		}
 
-    private static JsonElement deepCloneArray(JsonElement jsonElement) {
-        JsonArray jsonArray = (JsonArray) jsonElement;
-        JsonArray result = new JsonArray();
+		return result;
+	}
 
-        for (JsonElement element : jsonArray) {
-            result.add(deepClone(element));
-        }
+	private static JsonElement deepCloneArray(JsonElement jsonElement) {
+		JsonArray jsonArray = (JsonArray) jsonElement;
+		JsonArray result = new JsonArray();
 
-        return result;
-    }
+		for (JsonElement element : jsonArray) {
+			result.add(deepClone(element));
+		}
+
+		return result;
+	}
+
 }

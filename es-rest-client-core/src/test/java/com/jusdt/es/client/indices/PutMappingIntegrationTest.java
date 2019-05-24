@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.indices.mapping.PutMapping;
 
 import java.io.IOException;
@@ -42,7 +42,7 @@ public class PutMappingIntegrationTest extends AbstractIntegrationTest {
                 "{ \"document\" : { \"properties\" : { \"message_1\" : {\"type\" : \"text\", \"store\" : \"true\"} } } }"
         ).build();
 
-        JestResult result = client.execute(putMapping);
+        QueryResult result = client.execute(putMapping);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
     }
 
@@ -60,7 +60,7 @@ public class PutMappingIntegrationTest extends AbstractIntegrationTest {
                 expectedMappingSource
         ).build();
 
-        JestResult result = client.execute(putMapping);
+        QueryResult result = client.execute(putMapping);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
     }
 

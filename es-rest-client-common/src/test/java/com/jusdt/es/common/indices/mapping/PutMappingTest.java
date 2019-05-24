@@ -2,7 +2,7 @@ package com.jusdt.es.common.indices.mapping;
 
 import org.junit.Test;
 
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.indices.mapping.PutMapping;
 
 import static org.junit.Assert.assertEquals;
@@ -15,7 +15,7 @@ public class PutMappingTest {
         PutMapping putMapping = new PutMapping.Builder("twitter", "tweet", "source").build();
 
         assertEquals("PUT", putMapping.getRestMethodName());
-        assertEquals("twitter/tweet/_mapping", putMapping.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("twitter/tweet/_mapping", putMapping.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test

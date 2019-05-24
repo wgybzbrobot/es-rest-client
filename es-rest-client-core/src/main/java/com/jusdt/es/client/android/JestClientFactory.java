@@ -1,7 +1,7 @@
 package com.jusdt.es.client.android;
 
 import com.google.gson.Gson;
-import com.jusdt.es.common.client.JestClient;
+import com.jusdt.es.common.client.ESClient;
 import com.jusdt.es.common.client.config.IdleConnectionReaper;
 import com.jusdt.es.common.client.config.NodeChecker;
 
@@ -27,7 +27,7 @@ public class JestClientFactory {
     final static Logger log = LoggerFactory.getLogger(JestClientFactory.class);
     private DroidClientConfig droidClientConfig;
 
-    public JestClient getObject() {
+    public ESClient getObject() {
         JestDroidClient client = new JestDroidClient();
 
 

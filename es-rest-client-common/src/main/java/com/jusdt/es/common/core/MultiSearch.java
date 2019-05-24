@@ -4,7 +4,7 @@ import com.google.common.base.CharMatcher;
 import com.google.gson.Gson;
 import com.jusdt.es.common.action.AbstractAction;
 import com.jusdt.es.common.action.GenericResultAbstractAction;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.params.Parameters;
 import com.jusdt.es.common.strings.StringUtils;
 
@@ -13,11 +13,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * @author Dogukan Sonmez
- * @author cihat keser
- */
 public class MultiSearch extends AbstractAction<MultiSearchResult> {
+	
     private static final CharMatcher NEWLINE_MATCHER = CharMatcher.anyOf("\r\n").precomputed();
 
     private Collection<Search> searches;
@@ -64,6 +61,7 @@ public class MultiSearch extends AbstractAction<MultiSearchResult> {
                     .append(query)
                     .append("\n");
         }
+        
         return sb.toString();
     }
 
@@ -82,7 +80,7 @@ public class MultiSearch extends AbstractAction<MultiSearchResult> {
     }
 
     @Override
-    protected String buildURI(ElasticsearchVersion elasticsearchVersion) {
+    protected String buildURI(ElasticSearchVersion elasticsearchVersion) {
         return super.buildURI(elasticsearchVersion) + "/_msearch";
     }
 
@@ -104,10 +102,12 @@ public class MultiSearch extends AbstractAction<MultiSearchResult> {
         }
 
         MultiSearch rhs = (MultiSearch) obj;
+        
         return super.equals(obj) && Objects.equals(searches, rhs.searches);
     }
 
     public static class Builder extends GenericResultAbstractAction.Builder<MultiSearch, Builder> {
+    	
         private List<Search> searchList = new LinkedList<>();
 
         public Builder(Search search) {
@@ -134,5 +134,7 @@ public class MultiSearch extends AbstractAction<MultiSearchResult> {
         public MultiSearch build() {
             return new MultiSearch(this);
         }
+        
     }
+    
 }

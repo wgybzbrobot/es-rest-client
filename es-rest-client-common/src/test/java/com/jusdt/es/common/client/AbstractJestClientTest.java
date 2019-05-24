@@ -4,8 +4,8 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
 import com.jusdt.es.common.action.Action;
 import com.jusdt.es.common.client.AbstractJestClient;
-import com.jusdt.es.common.client.JestResult;
-import com.jusdt.es.common.client.JestResultHandler;
+import com.jusdt.es.common.client.QueryResult;
+import com.jusdt.es.common.client.QueryResultHandler;
 
 import org.junit.Test;
 
@@ -30,12 +30,12 @@ public class AbstractJestClientTest {
 
     AbstractJestClient client = new AbstractJestClient() {
         @Override
-        public <T extends JestResult> T execute(Action<T> clientRequest) throws IOException {
+        public <T extends QueryResult> T execute(Action<T> clientRequest) throws IOException {
             return null;  // NOOP
         }
 
         @Override
-        public <T extends JestResult> void executeAsync(final Action<T> clientRequest, final JestResultHandler<? super T> resultHandler) {
+        public <T extends QueryResult> void executeAsync(final Action<T> clientRequest, final QueryResultHandler<? super T> resultHandler) {
             // NOOP
         }
     };

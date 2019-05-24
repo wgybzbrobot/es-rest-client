@@ -2,7 +2,7 @@ package com.jusdt.es.common.indices;
 
 import org.junit.Test;
 
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.indices.ClearCache;
 
 import static org.junit.Assert.assertEquals;
@@ -16,19 +16,19 @@ public class ClearCacheTest {
     @Test
     public void testBasicUrlGeneration() {
         ClearCache clearCache = new ClearCache.Builder().build();
-        assertEquals("_all/_cache/clear", clearCache.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("_all/_cache/clear", clearCache.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
     public void testBasicUrlGenerationWithParameters() {
         ClearCache clearCache = new ClearCache.Builder().bloom(true).fieldData(false).build();
-        assertEquals("_all/_cache/clear?bloom=true&field_data=false", clearCache.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("_all/_cache/clear?bloom=true&field_data=false", clearCache.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
     public void testMultiIndexUrlGenerationWithParameters() {
         ClearCache clearCache = new ClearCache.Builder().addIndex("tom").addIndex("jerry").bloom(true).build();
-        assertEquals("tom%2Cjerry/_cache/clear?bloom=true", clearCache.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("tom%2Cjerry/_cache/clear?bloom=true", clearCache.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test

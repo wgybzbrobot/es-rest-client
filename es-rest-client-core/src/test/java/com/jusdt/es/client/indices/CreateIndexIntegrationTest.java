@@ -9,7 +9,7 @@ import org.elasticsearch.test.ESIntegTestCase;
 import org.junit.Test;
 
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.indices.CreateIndex;
 
 import java.io.IOException;
@@ -23,7 +23,7 @@ public class CreateIndexIntegrationTest extends AbstractIntegrationTest {
     public void createIndexWithDefaultSettings() throws IOException {
         CreateIndex createIndex = new CreateIndex.Builder("newindex").build();
 
-        JestResult result = client.execute(createIndex);
+        QueryResult result = client.execute(createIndex);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
     }
 
@@ -41,7 +41,7 @@ public class CreateIndexIntegrationTest extends AbstractIntegrationTest {
                 .settings(expectedSettingsMap)
                 .build();
 
-        JestResult result = client.execute(createIndex);
+        QueryResult result = client.execute(createIndex);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         GetSettingsResponse settingsResponse =
@@ -68,7 +68,7 @@ public class CreateIndexIntegrationTest extends AbstractIntegrationTest {
                 .mappings(mappingsJson)
                 .build();
 
-        JestResult result = client.execute(createIndex);
+        QueryResult result = client.execute(createIndex);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         GetSettingsResponse settingsResponse =

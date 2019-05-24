@@ -10,8 +10,8 @@ import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.annotations.JestId;
-import com.jusdt.es.common.client.JestResultHandler;
+import com.jusdt.es.common.annotations.ESClientId;
+import com.jusdt.es.common.client.QueryResultHandler;
 import com.jusdt.es.common.core.DocumentResult;
 import com.jusdt.es.common.core.Get;
 import com.jusdt.es.common.core.Index;
@@ -98,7 +98,7 @@ public class GetIntegrationTest extends AbstractIntegrationTest {
     @Test
     public void getAsynchronously() throws InterruptedException, ExecutionException, IOException {
         final CountDownLatch completionChecker = new CountDownLatch(1);
-        client.executeAsync(new Get.Builder(INDEX, "1").type(TYPE).build(), new JestResultHandler<DocumentResult>() {
+        client.executeAsync(new Get.Builder(INDEX, "1").type(TYPE).build(), new QueryResultHandler<DocumentResult>() {
             @Override
             public void completed(DocumentResult result) {
                 assertTrue(result.getErrorMessage(), result.isSucceeded());
@@ -157,7 +157,7 @@ public class GetIntegrationTest extends AbstractIntegrationTest {
     }
 
     class Tweet {
-        @JestId
+        @ESClientId
         String userHash;
         String message;
 

@@ -2,7 +2,7 @@ package com.jusdt.es.common.core;
 
 import org.junit.Test;
 
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.core.Ping;
 
 import static org.junit.Assert.assertEquals;
@@ -15,6 +15,6 @@ public class PingTest {
 
         assertEquals("GET", ping.getRestMethodName());
         assertNull(ping.getData(null));
-        assertEquals("", ping.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("", ping.getURI(ElasticSearchVersion.UNKNOWN));
     }
 }

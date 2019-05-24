@@ -2,7 +2,7 @@ package com.jusdt.es.common.indices.mapping;
 
 import org.junit.Test;
 
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.indices.mapping.DeleteMapping;
 
 import static org.junit.Assert.assertEquals;
@@ -15,7 +15,7 @@ public class DeleteMappingTest {
         DeleteMapping deleteMapping = new DeleteMapping.Builder("twitter","tweet").build();
 
         assertEquals("DELETE", deleteMapping.getRestMethodName());
-        assertEquals("twitter/tweet/_mapping", deleteMapping.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("twitter/tweet/_mapping", deleteMapping.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test

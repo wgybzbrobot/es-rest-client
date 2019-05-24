@@ -4,7 +4,7 @@ import org.elasticsearch.test.ESIntegTestCase;
 import org.junit.Test;
 
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.indices.DeleteIndex;
 
 import java.io.IOException;
@@ -21,14 +21,14 @@ public class DeleteIndexIntegrationTest extends AbstractIntegrationTest {
         createIndex(indexName);
 
         DeleteIndex indicesExists = new DeleteIndex.Builder(indexName).build();
-        JestResult result = client.execute(indicesExists);
+        QueryResult result = client.execute(indicesExists);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
     }
 
     @Test
     public void deleteNonExistingIndex() throws IOException {
         DeleteIndex deleteIndex = new DeleteIndex.Builder("newindex2").build();
-        JestResult result = client.execute(deleteIndex);
+        QueryResult result = client.execute(deleteIndex);
         assertFalse("Delete request should fail for an index that does not exist", result.isSucceeded());
     }
 

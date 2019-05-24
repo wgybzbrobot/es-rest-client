@@ -2,7 +2,7 @@ package com.jusdt.es.common.core;
 
 import org.junit.Test;
 
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.core.Explain;
 
 import static org.junit.Assert.assertEquals;
@@ -17,7 +17,7 @@ public class ExplainTest {
     public void explain() {
         Explain explain = new Explain.Builder("twitter", "tweet", "1", "query").build();
         assertEquals("POST", explain.getRestMethodName());
-        assertEquals("twitter/tweet/1/_explain", explain.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("twitter/tweet/1/_explain", explain.getURI(ElasticSearchVersion.UNKNOWN));
         assertEquals("query", explain.getData(null));
     }
 

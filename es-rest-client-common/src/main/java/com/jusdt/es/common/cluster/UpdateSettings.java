@@ -2,7 +2,7 @@ package com.jusdt.es.common.cluster;
 
 import com.jusdt.es.common.action.AbstractAction;
 import com.jusdt.es.common.action.GenericResultAbstractAction;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 
 /**
  * Allows to update cluster wide specific settings. Settings updated can either be persistent (applied cross restarts)
@@ -12,41 +12,42 @@ import com.jusdt.es.common.client.config.ElasticsearchVersion;
  * There is a specific list of settings that can be updated, please see
  * <a href="http://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-update-settings.html#cluster-settings">Elasticsearch docs</a>
  * for more information.
- *
- * @author cihat keser
  */
 public class UpdateSettings extends GenericResultAbstractAction {
 
-    protected UpdateSettings(Builder builder) {
-        super(builder);
-        this.payload = builder.source;
-    }
+	protected UpdateSettings(Builder builder) {
+		super(builder);
+		this.payload = builder.source;
+	}
 
-    protected String buildURI(ElasticsearchVersion elasticsearchVersion) {
-        return super.buildURI(elasticsearchVersion) + "/_cluster/settings";
-    }
+	@Override
+	protected String buildURI(ElasticSearchVersion elasticsearchVersion) {
+		return super.buildURI(elasticsearchVersion) + "/_cluster/settings";
+	}
 
-    @Override
-    public String getRestMethodName() {
-        return "PUT";
-    }
+	@Override
+	public String getRestMethodName() {
+		return "PUT";
+	}
 
-    public static class Builder extends AbstractAction.Builder<UpdateSettings, Builder> {
-        private final Object source;
+	public static class Builder extends AbstractAction.Builder<UpdateSettings, Builder> {
 
-        /**
-         * There is a specific list of settings that can be updated, please see
-         * <a href="http://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-update-settings.html#cluster-settings">Elasticsearch docs</a>
-         * for more information.
-         */
-        public Builder(Object source) {
-            this.source = source;
-        }
+		private final Object source;
 
-        @Override
-        public UpdateSettings build() {
-            return new UpdateSettings(this);
-        }
-    }
+		/**
+		 * There is a specific list of settings that can be updated, please see
+		 * <a href="http://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-update-settings.html#cluster-settings">Elasticsearch docs</a>
+		 * for more information.
+		 */
+		public Builder(Object source) {
+			this.source = source;
+		}
+
+		@Override
+		public UpdateSettings build() {
+			return new UpdateSettings(this);
+		}
+
+	}
 
 }

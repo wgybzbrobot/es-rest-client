@@ -8,7 +8,7 @@ import org.elasticsearch.test.ESIntegTestCase;
 import org.junit.Test;
 
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.indices.OpenIndex;
 
 import java.io.IOException;
@@ -40,7 +40,7 @@ public class OpenIndexIntegrationTest extends AbstractIntegrationTest {
         );
 
         OpenIndex openIndex = new OpenIndex.Builder(INDEX_NAME_2).build();
-        JestResult result = client.execute(openIndex);
+        QueryResult result = client.execute(openIndex);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
         ensureGreen(INDEX_NAME_2);
 

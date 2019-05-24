@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 import com.google.gson.Gson;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.core.Doc;
 import com.jusdt.es.common.core.MultiGet;
 
@@ -28,7 +28,7 @@ public class MultiGetTest {
         MultiGet get = new MultiGet.Builder.ByDoc(Arrays.asList(doc1, doc2, doc3)).build();
 
         assertEquals("POST", get.getRestMethodName());
-        assertEquals("/_mget", get.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("/_mget", get.getURI(ElasticSearchVersion.UNKNOWN));
         JSONAssert.assertEquals("{\"docs\":[" +
                 "{\"_index\":\"twitter\",\"_type\":\"tweet\",\"_id\":\"1\"}," +
                 "{\"_index\":\"twitter\",\"_type\":\"tweet\",\"_id\":\"2\"}," +
@@ -57,7 +57,7 @@ public class MultiGetTest {
         MultiGet get = new MultiGet.Builder.ById("twitter", "tweet").addId(Arrays.asList("1", "2", "3")).build();
 
         assertEquals("POST", get.getRestMethodName());
-        assertEquals("twitter/tweet/_mget", get.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("twitter/tweet/_mget", get.getURI(ElasticSearchVersion.UNKNOWN));
         JSONAssert.assertEquals("{\"ids\":[\"1\",\"2\",\"3\"]}", get.getData(new Gson()), false);
     }
 

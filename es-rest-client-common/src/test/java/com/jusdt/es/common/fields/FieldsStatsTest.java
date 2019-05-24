@@ -1,7 +1,7 @@
 package com.jusdt.es.common.fields;
 
 import com.google.gson.Gson;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.fields.FieldCapabilities;
 
 import org.junit.Test;
@@ -20,7 +20,7 @@ public class FieldsStatsTest {
     public void testBasicUriGeneration() {
         FieldCapabilities fieldCapabilities = new FieldCapabilities.Builder(FIELDS).setIndex(INDEX).build();
         assertEquals("POST", fieldCapabilities.getRestMethodName());
-        assertEquals(INDEX + "/_field_caps", fieldCapabilities.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals(INDEX + "/_field_caps", fieldCapabilities.getURI(ElasticSearchVersion.UNKNOWN));
         assertEquals("{\"fields\":[\"" + TEST_FIELD + "\"]}", fieldCapabilities.getData(new Gson()));
     }
 
@@ -28,7 +28,7 @@ public class FieldsStatsTest {
     public void testBasicUriGenerationNoIndex() {
         FieldCapabilities fieldCapabilities = new FieldCapabilities.Builder(FIELDS).build();
         assertEquals("POST", fieldCapabilities.getRestMethodName());
-        assertEquals("_field_caps", fieldCapabilities.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("_field_caps", fieldCapabilities.getURI(ElasticSearchVersion.UNKNOWN));
         assertEquals("{\"fields\":[\"" + TEST_FIELD + "\"]}", fieldCapabilities.getData(new Gson()));
     }
 
@@ -36,7 +36,7 @@ public class FieldsStatsTest {
     public void testBasicUriGenerationWithLevel() {
         FieldCapabilities fieldCapabilities = new FieldCapabilities.Builder(FIELDS).setIndex(INDEX).setLevel("indices").build();
         assertEquals("POST", fieldCapabilities.getRestMethodName());
-        assertEquals(INDEX + "/_field_caps?level=indices", fieldCapabilities.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals(INDEX + "/_field_caps?level=indices", fieldCapabilities.getURI(ElasticSearchVersion.UNKNOWN));
         assertEquals("{\"fields\":[\"" + TEST_FIELD + "\"]}", fieldCapabilities.getData(new Gson()));
     }
 }

@@ -12,7 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.indices.aliases.AliasExists;
 
 @ESIntegTestCase.ClusterScope(scope = ESIntegTestCase.Scope.SUITE, numDataNodes = 1)
@@ -33,28 +33,28 @@ public class AliasExistsIntegrationTest extends AbstractIntegrationTest {
 		createAlias(INDEX_NAME_1, alias);
 
 		AliasExists aliasExists = new AliasExists.Builder().build();
-		JestResult result = client.execute(aliasExists);
+		QueryResult result = client.execute(aliasExists);
 		assertTrue(result.getErrorMessage(), result.isSucceeded());
 	}
 
 	@Test
 	public void testAliasDoesNotExist() throws IOException {
 		AliasExists aliasExists = new AliasExists.Builder().alias("does_not_exist").build();
-		JestResult result = client.execute(aliasExists);
+		QueryResult result = client.execute(aliasExists);
 		assertFalse(result.getErrorMessage(), result.isSucceeded());
 	}
 
 	@Test
 	public void testIndexDoesNotExist() throws IOException {
 		AliasExists aliasExists = new AliasExists.Builder().addIndex("does_not_exist").build();
-		JestResult result = client.execute(aliasExists);
+		QueryResult result = client.execute(aliasExists);
 		assertFalse(result.getErrorMessage(), result.isSucceeded());
 	}
 
 	@Test
 	public void testAliasAndIndexDoesNotExist() throws IOException {
 		AliasExists aliasExists = new AliasExists.Builder().addIndex("does_not_exist").alias("abc").build();
-		JestResult result = client.execute(aliasExists);
+		QueryResult result = client.execute(aliasExists);
 		assertFalse(result.getErrorMessage(), result.isSucceeded());
 	}
 
@@ -65,7 +65,7 @@ public class AliasExistsIntegrationTest extends AbstractIntegrationTest {
 		createAlias(INDEX_NAME_1, alias);
 
 		AliasExists aliasExists = new AliasExists.Builder().addIndex(INDEX_NAME_1).build();
-		JestResult result = client.execute(aliasExists);
+		QueryResult result = client.execute(aliasExists);
 		assertTrue(result.getErrorMessage(), result.isSucceeded());
 	}
 
@@ -76,7 +76,7 @@ public class AliasExistsIntegrationTest extends AbstractIntegrationTest {
 		createAlias(INDEX_NAME_1, alias);
 
 		AliasExists aliasExists = new AliasExists.Builder().addIndex(INDEX_NAME_1).addIndex(INDEX_NAME_2).build();
-		JestResult result = client.execute(aliasExists);
+		QueryResult result = client.execute(aliasExists);
 		assertTrue(result.getErrorMessage(), result.isSucceeded());
 	}
 
@@ -87,7 +87,7 @@ public class AliasExistsIntegrationTest extends AbstractIntegrationTest {
 		createAlias(INDEX_NAME_1, alias);
 
 		AliasExists aliasExists = new AliasExists.Builder().alias(alias).build();
-		JestResult result = client.execute(aliasExists);
+		QueryResult result = client.execute(aliasExists);
 		assertTrue(result.getErrorMessage(), result.isSucceeded());
 	}
 
@@ -98,7 +98,7 @@ public class AliasExistsIntegrationTest extends AbstractIntegrationTest {
 		createAlias(INDEX_NAME_1, alias);
 
 		AliasExists aliasExists = new AliasExists.Builder().addIndex(INDEX_NAME_1).alias(alias).build();
-		JestResult result = client.execute(aliasExists);
+		QueryResult result = client.execute(aliasExists);
 		assertTrue(result.getErrorMessage(), result.isSucceeded());
 	}
 

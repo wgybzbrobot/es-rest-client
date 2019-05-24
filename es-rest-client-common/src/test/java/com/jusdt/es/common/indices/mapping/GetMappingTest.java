@@ -2,7 +2,7 @@ package com.jusdt.es.common.indices.mapping;
 
 import org.junit.Test;
 
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.indices.mapping.GetMapping;
 
 import static org.junit.Assert.assertEquals;
@@ -15,7 +15,7 @@ public class GetMappingTest {
         GetMapping getMapping = new GetMapping.Builder().addIndex("twitter").build();
 
         assertEquals("GET", getMapping.getRestMethodName());
-        assertEquals("twitter/_mapping", getMapping.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("twitter/_mapping", getMapping.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test

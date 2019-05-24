@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.indices.aliases.GetAliases;
 
 @ESIntegTestCase.ClusterScope(scope = ESIntegTestCase.Scope.SUITE, numDataNodes = 1)
@@ -39,7 +39,7 @@ public class GetAliasesIntegrationTest extends AbstractIntegrationTest {
 		assertTrue(indicesAliasesResponse.isAcknowledged());
 
 		GetAliases getAliases = new GetAliases.Builder().build();
-		JestResult result = client.execute(getAliases);
+		QueryResult result = client.execute(getAliases);
 		assertTrue(result.getErrorMessage(), result.isSucceeded());
 		assertEquals(1,
 				result.getJsonObject().getAsJsonObject(INDEX_NAME).getAsJsonObject("aliases").entrySet().size());
@@ -61,7 +61,7 @@ public class GetAliasesIntegrationTest extends AbstractIntegrationTest {
 		assertTrue(indicesAliasesResponse.isAcknowledged());
 
 		GetAliases getAliases = new GetAliases.Builder().addIndex(INDEX_NAME).build();
-		JestResult result = client.execute(getAliases);
+		QueryResult result = client.execute(getAliases);
 		assertTrue(result.getErrorMessage(), result.isSucceeded());
 		assertEquals(1, result.getJsonObject().entrySet().size());
 		assertEquals(1,
@@ -71,7 +71,7 @@ public class GetAliasesIntegrationTest extends AbstractIntegrationTest {
 	@Test
 	public void testGetAliasesForMultipleSpecificIndices() throws IOException {
 		GetAliases getAliases = new GetAliases.Builder().addIndex(INDEX_NAME).addIndex(INDEX_NAME_3).build();
-		JestResult result = client.execute(getAliases);
+		QueryResult result = client.execute(getAliases);
 		assertTrue(result.getErrorMessage(), result.isSucceeded());
 		assertEquals(2, result.getJsonObject().entrySet().size());
 		assertEquals(0,

@@ -11,7 +11,7 @@ import org.junit.Test;
 import com.google.gson.JsonObject;
 import com.jusdt.es.client.common.AbstractIntegrationTest;
 import com.jusdt.es.common.action.Action;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.indices.mapping.GetMapping;
 
 /**
@@ -43,7 +43,7 @@ public class GetMappingIntegrationTest extends AbstractIntegrationTest {
 		assertEquals("All shards should have been refreshed", 0, refreshResponse.getFailedShards());
 
 		GetMapping getMapping = new GetMapping.Builder().build();
-		JestResult result = client.execute(getMapping);
+		QueryResult result = client.execute(getMapping);
 		assertTrue(result.getErrorMessage(), result.isSucceeded());
 
 		JsonObject resultJson = result.getJsonObject();
@@ -71,7 +71,7 @@ public class GetMappingIntegrationTest extends AbstractIntegrationTest {
 		assertEquals("All shards should have been refreshed", 0, refreshResponse.getFailedShards());
 
 		Action getMapping = new GetMapping.Builder().addIndex(INDEX_2_NAME).build();
-		JestResult result = client.execute(getMapping);
+		QueryResult result = client.execute(getMapping);
 		assertTrue(result.getErrorMessage(), result.isSucceeded());
 
 		System.out.println("result.getJsonString() = " + result.getJsonString());
@@ -106,7 +106,7 @@ public class GetMappingIntegrationTest extends AbstractIntegrationTest {
 		assertEquals("All shards should have been refreshed", 0, refreshResponse.getFailedShards());
 
 		Action getMapping = new GetMapping.Builder().addIndex(INDEX_2_NAME).addIndex(INDEX_1_NAME).build();
-		JestResult result = client.execute(getMapping);
+		QueryResult result = client.execute(getMapping);
 		assertTrue(result.getErrorMessage(), result.isSucceeded());
 
 		JsonObject resultJson = result.getJsonObject();

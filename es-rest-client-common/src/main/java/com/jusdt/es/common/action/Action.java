@@ -1,25 +1,23 @@
 package com.jusdt.es.common.action;
 
-import com.google.gson.Gson;
-import com.jusdt.es.common.client.JestResult;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
-
 import java.util.Map;
 
-/**
- * @author Dogukan Sonmez
- */
-public interface Action<T extends JestResult> {
+import com.google.gson.Gson;
+import com.jusdt.es.common.client.QueryResult;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 
-    String getRestMethodName();
+public interface Action<T extends QueryResult> {
 
-    String getURI(ElasticsearchVersion elasticsearchVersion);
+	String getRestMethodName();
 
-    String getData(Gson gson);
+	String getURI(ElasticSearchVersion elasticsearchVersion);
 
-    String getPathToResult();
+	String getData(Gson gson);
 
-    Map<String, Object> getHeaders();
+	String getPathToResult();
 
-    T createNewElasticSearchResult(String responseBody, int statusCode, String reasonPhrase, Gson gson);
+	Map<String, Object> getHeaders();
+
+	T createNewElasticSearchResult(String responseBody, int statusCode, String reasonPhrase, Gson gson);
+
 }

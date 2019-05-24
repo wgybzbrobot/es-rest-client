@@ -9,7 +9,7 @@ import org.elasticsearch.test.ESIntegTestCase;
 import org.junit.Test;
 
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.core.Search;
 import com.jusdt.es.common.core.SearchResult;
 import com.jusdt.es.common.core.SearchResult.Hit;
@@ -71,7 +71,7 @@ public class SearchTemplateIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     public void searchWithValidQuery() throws IOException {
-        JestResult result = client.execute(new Search.TemplateBuilder(INLINE).build());
+        QueryResult result = client.execute(new Search.TemplateBuilder(INLINE).build());
         assertTrue(result.getErrorMessage(), result.isSucceeded());
     }
     

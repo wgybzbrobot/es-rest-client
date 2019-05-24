@@ -6,9 +6,9 @@ import com.google.gson.JsonSyntaxException;
 import com.jusdt.es.common.action.AbstractAction;
 import com.jusdt.es.common.action.Action;
 import com.jusdt.es.common.action.GenericResultAbstractAction;
-import com.jusdt.es.common.annotations.JestId;
-import com.jusdt.es.common.client.JestResult;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.annotations.ESClientId;
+import com.jusdt.es.common.client.QueryResult;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.core.Delete;
 import com.jusdt.es.common.core.Get;
 import com.jusdt.es.common.core.Index;
@@ -28,7 +28,7 @@ public class AbstractActionTest {
     public void buildRestUrlWithValidParameters() {
         String expected = "twitter/tweet/1";
         final Delete build = new Delete.Builder("1").index("twitter").type("tweet").build();
-        String actual = build.buildURI(ElasticsearchVersion.UNKNOWN);
+        String actual = build.buildURI(ElasticSearchVersion.UNKNOWN);
         assertEquals(expected, actual);
     }
 
@@ -40,7 +40,7 @@ public class AbstractActionTest {
                 .setParameter("x", "q")
                 .setParameter("w", "p")
                 .build();
-        assertEquals("?x=y&x=z&x=q&w=p", dummyAction.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("?x=y&x=z&x=q&w=p", dummyAction.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
@@ -101,11 +101,11 @@ public class AbstractActionTest {
 
         assertEquals("\"updateData\"", update.getData(null).toString());
         assertEquals("POST", update.getRestMethodName());
-        assertEquals("indexName/indexType/1/_update", update.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("indexName/indexType/1/_update", update.getURI(ElasticSearchVersion.UNKNOWN));
 
         assertEquals("\"indexDocumentData\"", indexDocument.getData(null).toString());
         assertEquals("PUT", indexDocument.getRestMethodName());
-        assertEquals("index/type/id", indexDocument.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("index/type/id", indexDocument.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
@@ -198,7 +198,7 @@ public class AbstractActionTest {
                 "    \"_id\" : \"1\"\n" +
                 "}\n";
         Index index = new Index.Builder("{\"abc\":\"dce\"}").index("test").build();
-        JestResult result = index.createNewElasticSearchResult(jsonString, 200, null, new Gson());
+        QueryResult result = index.createNewElasticSearchResult(jsonString, 200, null, new Gson());
         assertTrue(result.getErrorMessage(), result.isSucceeded());
         assertEquals(200, result.getResponseCode());
     }
@@ -207,7 +207,7 @@ public class AbstractActionTest {
     public void getFailedIndexResult() {
         String jsonString = "{\"error\":\"Invalid index\",\"status\":400}";
         Index index = new Index.Builder("{\"abc\":\"dce\"}").index("test").build();
-        JestResult result = index.createNewElasticSearchResult(jsonString, 400, null, new Gson());
+        QueryResult result = index.createNewElasticSearchResult(jsonString, 400, null, new Gson());
         assertFalse(result.isSucceeded());
         assertEquals("\"Invalid index\"", result.getErrorMessage());
     }
@@ -222,7 +222,7 @@ public class AbstractActionTest {
                 "    \"found\" : true\n" +
                 "}\n";
         Delete delete = new Delete.Builder("1").index("twitter").type("tweet").build();
-        JestResult result = delete.createNewElasticSearchResult(jsonString, 200, null, new Gson());
+        QueryResult result = delete.createNewElasticSearchResult(jsonString, 200, null, new Gson());
         assertTrue(result.getErrorMessage(), result.isSucceeded());
     }
 
@@ -236,7 +236,7 @@ public class AbstractActionTest {
                 "    \"found\" : false\n" +
                 "}\n";
         Delete delete = new Delete.Builder("1").index("test").type("tweet").build();
-        JestResult result = delete.createNewElasticSearchResult(jsonString, 404, null, new Gson());
+        QueryResult result = delete.createNewElasticSearchResult(jsonString, 404, null, new Gson());
         assertFalse(result.isSucceeded());
     }
 
@@ -249,13 +249,13 @@ public class AbstractActionTest {
                 "    \"exists\" : true" +
                 "}";
         Get get = new Get.Builder("test", "1").build();
-        JestResult result = get.createNewElasticSearchResult(jsonString, 200, null, new Gson());
+        QueryResult result = get.createNewElasticSearchResult(jsonString, 200, null, new Gson());
         assertTrue(result.getErrorMessage(), result.isSucceeded());
     }
 
     class Source {
 
-        @JestId
+        @ESClientId
         String email;
         String data;
 

@@ -6,16 +6,12 @@ import com.google.common.collect.Lists;
 import com.jusdt.es.common.action.AbstractAction;
 import com.jusdt.es.common.action.AbstractMultiTypeActionBuilder;
 import com.jusdt.es.common.action.GenericResultAbstractAction;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * @author Dogukan Sonmez
- * @author cihat keser
- */
 public class MultiGet extends GenericResultAbstractAction {
 
     protected MultiGet(AbstractAction.Builder builder) {
@@ -42,7 +38,7 @@ public class MultiGet extends GenericResultAbstractAction {
     }
 
     @Override
-    protected String buildURI(ElasticsearchVersion elasticsearchVersion) {
+    protected String buildURI(ElasticSearchVersion elasticsearchVersion) {
         return super.buildURI(elasticsearchVersion) + "/_mget";
     }
 
@@ -120,5 +116,7 @@ public class MultiGet extends GenericResultAbstractAction {
                 return new MultiGet(this);
             }
         }
+        
     }
+    
 }

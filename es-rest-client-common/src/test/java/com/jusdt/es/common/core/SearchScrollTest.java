@@ -3,7 +3,7 @@ package com.jusdt.es.common.core;
 import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.core.SearchScroll;
 
 import org.junit.Test;
@@ -20,7 +20,7 @@ public class SearchScrollTest {
     public void methodIsGetIfScrollIdIsShort() {
         String scrollId = Strings.padStart("scrollId", SearchScroll.MAX_SCROLL_ID_LENGTH, 'x');
         SearchScroll searchScroll = new SearchScroll.Builder(scrollId, "1m").build();
-        String uri = searchScroll.getURI(ElasticsearchVersion.UNKNOWN);
+        String uri = searchScroll.getURI(ElasticSearchVersion.UNKNOWN);
 
         assertEquals("GET", searchScroll.getRestMethodName());
         assertNull(searchScroll.getData(new Gson()));
@@ -36,7 +36,7 @@ public class SearchScrollTest {
         expectedResults.addProperty("scroll_id", scrollId);
 
         SearchScroll searchScroll = new SearchScroll.Builder(scrollId, "1m").build();
-        String uri = searchScroll.getURI(ElasticsearchVersion.UNKNOWN);
+        String uri = searchScroll.getURI(ElasticSearchVersion.UNKNOWN);
 
         assertEquals("POST", searchScroll.getRestMethodName());
         assertEquals(expectedResults.toString(), searchScroll.getData(new Gson()));

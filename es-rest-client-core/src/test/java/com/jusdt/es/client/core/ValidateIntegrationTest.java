@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import com.jusdt.es.client.common.AbstractIntegrationTest;
 import com.jusdt.es.common.action.Action;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.core.Validate;
 import com.jusdt.es.common.params.Parameters;
 
@@ -64,7 +64,7 @@ public class ValidateIntegrationTest extends AbstractIntegrationTest {
     }
 
     private void executeTestCase(Action action) throws RuntimeException, IOException {
-        JestResult result = client.execute(action);
+        QueryResult result = client.execute(action);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
         assertTrue((Boolean) result.getValue("valid"));
     }

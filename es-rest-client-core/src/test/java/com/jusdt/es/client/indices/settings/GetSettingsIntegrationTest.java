@@ -2,7 +2,7 @@ package com.jusdt.es.client.indices.settings;
 
 import com.google.gson.JsonObject;
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.indices.settings.GetSettings;
 
 import org.elasticsearch.test.ESIntegTestCase;
@@ -24,7 +24,7 @@ public class GetSettingsIntegrationTest extends AbstractIntegrationTest {
         ensureGreen(index);
 
         GetSettings getSettings = new GetSettings.Builder().build();
-        JestResult result = client.execute(getSettings);
+        QueryResult result = client.execute(getSettings);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         assertTrue(result.isSucceeded());
@@ -42,7 +42,7 @@ public class GetSettingsIntegrationTest extends AbstractIntegrationTest {
         ensureGreen(index);
 
         GetSettings getSettings = new GetSettings.Builder().addIndex("nonExisting").build();
-        JestResult result = client.execute(getSettings);
+        QueryResult result = client.execute(getSettings);
         assertFalse(result.isSucceeded());
     }
 

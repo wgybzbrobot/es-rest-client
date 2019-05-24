@@ -3,8 +3,8 @@ package com.jusdt.es.common.client.config;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.jusdt.es.common.action.Action;
-import com.jusdt.es.common.client.JestClient;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.ESClient;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.client.config.ClientConfig;
 import com.jusdt.es.common.client.config.CouldNotConnectException;
 import com.jusdt.es.common.client.config.NodeChecker;
@@ -31,7 +31,7 @@ import static org.mockito.Mockito.when;
 public class NodeCheckerTest {
 
     ClientConfig clientConfig;
-    JestClient jestClient;
+    ESClient jestClient;
 
     @Before
     public void setUp() throws Exception {
@@ -40,7 +40,7 @@ public class NodeCheckerTest {
                 .discoveryFrequency(1l, TimeUnit.SECONDS)
                 .build();
 
-        jestClient = mock(JestClient.class);
+        jestClient = mock(ESClient.class);
     }
 
     @Test
@@ -51,7 +51,7 @@ public class NodeCheckerTest {
                 .defaultSchemeForDiscoveredNodes("https")
                 .build());
 
-        JestResult result = new JestResult(new Gson());
+        QueryResult result = new QueryResult(new Gson());
         result.setJsonMap(ImmutableMap.<String, Object>of(
                 "ok", "true",
                 "nodes", ImmutableMap.of(
@@ -79,7 +79,7 @@ public class NodeCheckerTest {
     public void testEsVersion5() throws Exception {
         NodeChecker nodeChecker = new NodeChecker(jestClient, clientConfig);
 
-        JestResult result = new JestResult(new Gson());
+        QueryResult result = new QueryResult(new Gson());
         result.setJsonMap(ImmutableMap.<String, Object>of(
                 "ok", "true",
                 "nodes", ImmutableMap.of(
@@ -108,7 +108,7 @@ public class NodeCheckerTest {
     public void testWithResolvedWithoutHostnameAddress() throws Exception {
         NodeChecker nodeChecker = new NodeChecker(jestClient, clientConfig);
 
-        JestResult result = new JestResult(new Gson());
+        QueryResult result = new QueryResult(new Gson());
         result.setJsonMap(ImmutableMap.<String, Object>of(
                 "ok", "true",
                 "nodes", ImmutableMap.of(
@@ -136,7 +136,7 @@ public class NodeCheckerTest {
     public void testWithResolvedWithHostnameAddress() throws Exception {
         NodeChecker nodeChecker = new NodeChecker(jestClient, clientConfig);
 
-        JestResult result = new JestResult(new Gson());
+        QueryResult result = new QueryResult(new Gson());
         result.setJsonMap(ImmutableMap.<String, Object>of(
                 "ok", "true",
                 "nodes", ImmutableMap.of(
@@ -164,7 +164,7 @@ public class NodeCheckerTest {
     public void testWithUnresolvedAddress() throws Exception {
         NodeChecker nodeChecker = new NodeChecker(jestClient, clientConfig);
 
-        JestResult result = new JestResult(new Gson());
+        QueryResult result = new QueryResult(new Gson());
         result.setJsonMap(ImmutableMap.<String, Object>of(
                 "ok", "true",
                 "nodes", ImmutableMap.of(
@@ -192,7 +192,7 @@ public class NodeCheckerTest {
     public void testWithInvalidUnresolvedAddress() throws Exception {
         NodeChecker nodeChecker = new NodeChecker(jestClient, clientConfig);
 
-        JestResult result = new JestResult(new Gson());
+        QueryResult result = new QueryResult(new Gson());
         result.setJsonMap(ImmutableMap.<String, Object>of(
                 "ok", "true",
                 "nodes", ImmutableMap.of(
@@ -219,7 +219,7 @@ public class NodeCheckerTest {
     public void testWithInvalidResolvedAddress() throws Exception {
         NodeChecker nodeChecker = new NodeChecker(jestClient, clientConfig);
 
-        JestResult result = new JestResult(new Gson());
+        QueryResult result = new QueryResult(new Gson());
         result.setJsonMap(ImmutableMap.<String, Object>of(
                 "ok", "true",
                 "nodes", ImmutableMap.of(
@@ -263,7 +263,7 @@ public class NodeCheckerTest {
     @Test
     public void testNodesInfoFailureUsesBootstrapServerList() throws Exception {
         NodeChecker nodeChecker = new NodeChecker(jestClient, clientConfig);
-        JestResult result = new JestResult(new Gson());
+        QueryResult result = new QueryResult(new Gson());
         result.setSucceeded(false);
         when(jestClient.execute(isA(Action.class))).thenReturn(result);
 
@@ -283,7 +283,7 @@ public class NodeCheckerTest {
     public void testNodesInfoExceptionRemovesServerFromList() throws Exception {
         NodeChecker nodeChecker = new NodeChecker(jestClient, clientConfig);
 
-        JestResult result = new JestResult(new Gson());
+        QueryResult result = new QueryResult(new Gson());
         result.setJsonMap(ImmutableMap.<String, Object>of(
                 "ok", "true",
                 "nodes", ImmutableMap.of(

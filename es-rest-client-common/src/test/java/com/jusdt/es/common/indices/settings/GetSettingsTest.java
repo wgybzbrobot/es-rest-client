@@ -2,7 +2,7 @@ package com.jusdt.es.common.indices.settings;
 
 import org.junit.Test;
 
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.indices.settings.GetSettings;
 
 import static org.junit.Assert.assertEquals;
@@ -15,7 +15,7 @@ public class GetSettingsTest {
         String expectedUri = "_all/_settings";
 
         GetSettings getSettings = new GetSettings.Builder().build();
-        assertEquals(expectedUri, getSettings.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals(expectedUri, getSettings.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
@@ -23,7 +23,7 @@ public class GetSettingsTest {
         String expectedUri = "_all/_settings?prefix=index.routing.allocation.";
 
         GetSettings getSettings = new GetSettings.Builder().prefixQuery("index.routing.allocation.").build();
-        assertEquals(expectedUri, getSettings.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals(expectedUri, getSettings.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
@@ -31,7 +31,7 @@ public class GetSettingsTest {
         String expectedUri = "_all/_settings?prefix=";
 
         GetSettings getSettings = new GetSettings.Builder().prefixQuery("").build();
-        assertEquals(expectedUri, getSettings.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals(expectedUri, getSettings.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
@@ -39,7 +39,7 @@ public class GetSettingsTest {
         String expectedUri = "books/_settings";
 
         GetSettings getSettings = new GetSettings.Builder().addIndex("books").build();
-        assertEquals(expectedUri, getSettings.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals(expectedUri, getSettings.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
@@ -47,7 +47,7 @@ public class GetSettingsTest {
         String expectedUri = "books/_settings?prefix=index.routing.allocation.";
 
         GetSettings getSettings = new GetSettings.Builder().addIndex("books").prefixQuery("index.routing.allocation.").build();
-        assertEquals(expectedUri, getSettings.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals(expectedUri, getSettings.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class GetSettingsTest {
         String expectedUri = "books%2Carticles/_settings";
 
         GetSettings getSettings = new GetSettings.Builder().addIndex("books").addIndex("articles").build();
-        assertEquals(expectedUri, getSettings.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals(expectedUri, getSettings.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
@@ -64,7 +64,7 @@ public class GetSettingsTest {
 
         GetSettings getSettings = new GetSettings.Builder()
                 .addIndex("books").addIndex("articles").prefixQuery("index.routing.allocation.").build();
-        assertEquals(expectedUri, getSettings.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals(expectedUri, getSettings.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
@@ -72,7 +72,7 @@ public class GetSettingsTest {
         String expectedUri = "2013-*/_settings";
 
         GetSettings getSettings = new GetSettings.Builder().addIndex("2013-*").build();
-        assertEquals(expectedUri, getSettings.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals(expectedUri, getSettings.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
@@ -80,7 +80,7 @@ public class GetSettingsTest {
         String expectedUri = "2013-*/_settings?prefix=index.routing.allocation.";
 
         GetSettings getSettings = new GetSettings.Builder().addIndex("2013-*").prefixQuery("index.routing.allocation.").build();
-        assertEquals(expectedUri, getSettings.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals(expectedUri, getSettings.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test

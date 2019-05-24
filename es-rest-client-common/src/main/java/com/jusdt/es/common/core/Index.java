@@ -6,10 +6,6 @@ import com.jusdt.es.common.action.BulkableAction;
 import com.jusdt.es.common.action.SingleResultAbstractDocumentTargetedAction;
 import com.jusdt.es.common.params.Parameters;
 
-/**
- * @author Dogukan Sonmez
- * @author cihat keser
- */
 public class Index extends SingleResultAbstractDocumentTargetedAction implements BulkableAction<DocumentResult> {
 
     protected Index(Builder builder) {
@@ -41,6 +37,7 @@ public class Index extends SingleResultAbstractDocumentTargetedAction implements
     }
 
     public static class Builder extends SingleResultAbstractDocumentTargetedAction.Builder<Index, Builder> {
+    	
         private final Object source;
 
         public Builder(Object source) {
@@ -51,5 +48,7 @@ public class Index extends SingleResultAbstractDocumentTargetedAction implements
         public Index build() {
             return new Index(this);
         }
+        
     }
+    
 }

@@ -5,7 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.cluster.Reroute;
 import com.jusdt.es.common.cluster.UpdateSettings;
 import com.jusdt.es.common.cluster.reroute.RerouteAllocateReplica;
@@ -51,7 +51,7 @@ public class RerouteIntegrationTest extends AbstractIntegrationTest {
         String toNode = getAvailableNodeForShard(INDEX, shardToReroute);
 
         RerouteMove rerouteMove = new RerouteMove(INDEX, shardToReroute, fromNode, toNode);
-        JestResult result = client.execute(new Reroute.Builder(rerouteMove).build());
+        QueryResult result = client.execute(new Reroute.Builder(rerouteMove).build());
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         waitUntilPrimaryShardInNode(shardToReroute, toNode);
@@ -69,7 +69,7 @@ public class RerouteIntegrationTest extends AbstractIntegrationTest {
                 new RerouteCancel(INDEX, shardToReroute, fromNode, true),
                 new RerouteAllocateReplica(INDEX, shardToReroute, toNode)
         );
-        JestResult result = client.execute(new Reroute.Builder(commands).build());
+        QueryResult result = client.execute(new Reroute.Builder(commands).build());
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         waitUntilPrimaryShardInNode(shardToReroute, toNode);
@@ -84,7 +84,7 @@ public class RerouteIntegrationTest extends AbstractIntegrationTest {
                 "}";
 
         UpdateSettings updateSettings = new UpdateSettings.Builder(source).build();
-        JestResult result = client.execute(updateSettings);
+        QueryResult result = client.execute(updateSettings);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
     }
 

@@ -2,17 +2,15 @@ package com.jusdt.es.common.action;
 
 import java.util.Collection;
 
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 
 /**
  * Represents an Action that can be included in a Bulk request.
- *
- * @author cihat keser
  */
-public interface BulkableAction<T extends JestResult> extends DocumentTargetedAction<T> {
+public interface BulkableAction<T extends QueryResult> extends DocumentTargetedAction<T> {
 
-    String getBulkMethodName();
+	String getBulkMethodName();
 
-    Collection<Object> getParameter(String key);
+	Collection<Object> getParameter(String key);
 
 }

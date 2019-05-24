@@ -1,6 +1,6 @@
 package com.jusdt.es.common.snapshot;
 
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 
 /**
  * @author happyprg(hongsgo@gmail.com)
@@ -13,7 +13,7 @@ public class RestoreSnapshot extends AbstractSnapshotAction {
     }
 
     @Override
-    protected String buildURI(ElasticsearchVersion elasticsearchVersion) {
+    protected String buildURI(ElasticSearchVersion elasticsearchVersion) {
         return super.buildURI(elasticsearchVersion) + "/_restore";
     }
 

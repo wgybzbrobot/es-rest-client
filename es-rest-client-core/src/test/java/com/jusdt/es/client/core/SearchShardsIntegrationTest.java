@@ -4,7 +4,7 @@ import org.elasticsearch.test.ESIntegTestCase;
 import org.junit.Test;
 
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.core.SearchShards;
 
 import java.io.IOException;
@@ -23,7 +23,7 @@ public class SearchShardsIntegrationTest extends AbstractIntegrationTest {
         SearchShards searchShards = new SearchShards.Builder()
                 .addIndex(INDEX)
                 .build();
-        JestResult result = client.execute(searchShards);
+        QueryResult result = client.execute(searchShards);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         Map source = result.getSourceAsObject(Map.class);

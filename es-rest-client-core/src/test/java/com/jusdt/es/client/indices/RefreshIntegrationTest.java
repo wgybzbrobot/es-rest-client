@@ -5,7 +5,7 @@ import org.elasticsearch.test.ESIntegTestCase;
 import org.junit.Test;
 
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.indices.Refresh;
 
 import java.io.IOException;
@@ -27,7 +27,7 @@ public class RefreshIntegrationTest extends AbstractIntegrationTest {
 
 
         Refresh refresh = new Refresh.Builder().build();
-        JestResult result = client.execute(refresh);
+        QueryResult result = client.execute(refresh);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         assertEquals(12, result.getJsonObject().get("_shards").getAsJsonObject().get("total").getAsInt());
@@ -42,7 +42,7 @@ public class RefreshIntegrationTest extends AbstractIntegrationTest {
         ensureSearchable("i_flush_4", "i_flush_5", "i_flush_6");
 
         Refresh refresh = new Refresh.Builder().addIndex("i_flush_4").addIndex("i_flush_6").build();
-        JestResult result = client.execute(refresh);
+        QueryResult result = client.execute(refresh);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
         assertEquals(7, result.getJsonObject().get("_shards").getAsJsonObject().get("total").getAsInt());
     }

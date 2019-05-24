@@ -2,7 +2,7 @@ package com.jusdt.es.common.indices;
 
 import org.junit.Test;
 
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.indices.CloseIndex;
 
 import static org.junit.Assert.assertEquals;
@@ -18,7 +18,7 @@ public class CloseIndexTest {
         CloseIndex closeIndex = new CloseIndex.Builder("twitter").build();
 
         assertEquals("POST", closeIndex.getRestMethodName());
-        assertEquals("twitter/_close", closeIndex.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("twitter/_close", closeIndex.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test

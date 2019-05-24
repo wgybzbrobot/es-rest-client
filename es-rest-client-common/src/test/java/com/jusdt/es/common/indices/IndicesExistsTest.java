@@ -2,7 +2,7 @@ package com.jusdt.es.common.indices;
 
 import org.junit.Test;
 
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.indices.IndicesExists;
 
 import static org.junit.Assert.assertEquals;
@@ -17,7 +17,7 @@ public class IndicesExistsTest {
     public void testBasicUriGeneration() {
         IndicesExists indicesExists = new IndicesExists.Builder("twitter").build();
         assertEquals("HEAD", indicesExists.getRestMethodName());
-        assertEquals("twitter", indicesExists.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("twitter", indicesExists.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test

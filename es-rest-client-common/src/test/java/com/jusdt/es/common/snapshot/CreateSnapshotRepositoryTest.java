@@ -1,7 +1,7 @@
 package com.jusdt.es.common.snapshot;
 
 import com.google.gson.Gson;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.snapshot.CreateSnapshotRepository;
 
 import org.json.JSONException;
@@ -35,7 +35,7 @@ public class CreateSnapshotRepositoryTest {
         CreateSnapshotRepository createSnapshotRepository = new CreateSnapshotRepository.Builder(repository).settings(repositorySettings).build();
 
         assertEquals("PUT", createSnapshotRepository.getRestMethodName());
-        assertEquals("/_snapshot/" + repository, createSnapshotRepository.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("/_snapshot/" + repository, createSnapshotRepository.getURI(ElasticSearchVersion.UNKNOWN));
         String settings = createSnapshotRepository.getData(new Gson());
 
         String expectedJSON = "{" +
@@ -54,6 +54,6 @@ public class CreateSnapshotRepositoryTest {
     @Test
     public void testVerifyParam() {
         CreateSnapshotRepository createSnapshotRepository = new CreateSnapshotRepository.Builder(repository).verify(false).build();
-        assertEquals("/_snapshot/seohoo?verify=false", createSnapshotRepository.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("/_snapshot/seohoo?verify=false", createSnapshotRepository.getURI(ElasticSearchVersion.UNKNOWN));
     }
 }

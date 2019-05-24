@@ -11,8 +11,8 @@ import org.junit.Test;
 import com.jusdt.es.client.JestClientFactory;
 import com.jusdt.es.client.config.HttpClientConfig;
 import com.jusdt.es.client.http.JestHttpClient;
-import com.jusdt.es.common.client.JestResult;
-import com.jusdt.es.common.client.JestResultHandler;
+import com.jusdt.es.common.client.QueryResult;
+import com.jusdt.es.common.client.QueryResultHandler;
 import com.jusdt.es.common.indices.Stats;
 
 import io.netty.handler.codec.http.HttpResponseStatus;
@@ -99,7 +99,7 @@ public class FailingProxyTest {
     private Exception runSynchronously() {
         Exception exception = null;
         try {
-            final JestResult result = client.execute(status);
+            final QueryResult result = client.execute(status);
         } catch (Exception e) {
             exception = e;
         }
@@ -112,7 +112,7 @@ public class FailingProxyTest {
         return resultHandler.get();
     }
 
-    private class ResultHandler implements JestResultHandler {
+    private class ResultHandler implements QueryResultHandler {
         private final Semaphore sema = new Semaphore(0);
         private Exception exception = null;
 

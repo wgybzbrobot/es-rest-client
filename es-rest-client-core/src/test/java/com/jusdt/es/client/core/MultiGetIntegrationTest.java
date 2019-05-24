@@ -4,7 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.jusdt.es.client.common.AbstractIntegrationTest;
 import com.jusdt.es.common.action.Action;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.core.Doc;
 import com.jusdt.es.common.core.MultiGet;
 
@@ -40,7 +40,7 @@ public class MultiGetIntegrationTest extends AbstractIntegrationTest {
         doc1.setSource("author");
 
         Action action = new MultiGet.Builder.ByDoc(doc1).build();
-        JestResult result = client.execute(action);
+        QueryResult result = client.execute(action);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
         result.getJsonObject().getAsJsonArray("docs");
 
@@ -62,7 +62,7 @@ public class MultiGetIntegrationTest extends AbstractIntegrationTest {
         doc1.setSource(Boolean.FALSE);
 
         Action action = new MultiGet.Builder.ByDoc(doc1).build();
-        JestResult result = client.execute(action);
+        QueryResult result = client.execute(action);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
         result.getJsonObject().getAsJsonArray("docs");
 
@@ -83,7 +83,7 @@ public class MultiGetIntegrationTest extends AbstractIntegrationTest {
         List<Doc> docs = Arrays.asList(doc1, doc2, doc3);
 
         Action action = new MultiGet.Builder.ByDoc(docs).build();
-        JestResult result = client.execute(action);
+        QueryResult result = client.execute(action);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
         result.getJsonObject().getAsJsonArray("docs");
 
@@ -105,7 +105,7 @@ public class MultiGetIntegrationTest extends AbstractIntegrationTest {
         List<Doc> docs = Arrays.asList(doc1, doc3);
 
         Action action = new MultiGet.Builder.ByDoc(docs).build();
-        JestResult result = client.execute(action);
+        QueryResult result = client.execute(action);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         JsonArray actualDocs = result.getJsonObject().getAsJsonArray("docs");
@@ -125,7 +125,7 @@ public class MultiGetIntegrationTest extends AbstractIntegrationTest {
         List<Doc> docs = Arrays.asList(doc1, doc3, doc6);
 
         Action action = new MultiGet.Builder.ByDoc(docs).build();
-        JestResult result = client.execute(action);
+        QueryResult result = client.execute(action);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         JsonArray actualDocs = result.getJsonObject().getAsJsonArray("docs");
@@ -142,7 +142,7 @@ public class MultiGetIntegrationTest extends AbstractIntegrationTest {
     @Test
     public void getDocumentWithMultipleIdsWhenAllIndexedDocsAreRequested() throws IOException {
         Action action = new MultiGet.Builder.ById(TEST_INDEX, TEST_TYPE).addId("1").addId("2").addId("3").build();
-        JestResult result = client.execute(action);
+        QueryResult result = client.execute(action);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         JsonArray actualDocs = result.getJsonObject().getAsJsonArray("docs");
@@ -159,7 +159,7 @@ public class MultiGetIntegrationTest extends AbstractIntegrationTest {
     @Test
     public void getDocumentWithMultipleIdsWhenSomeIndexedDocsAreRequested() throws IOException {
         Action action = new MultiGet.Builder.ById(TEST_INDEX, TEST_TYPE).addId("1").addId("3").build();
-        JestResult result = client.execute(action);
+        QueryResult result = client.execute(action);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         JsonArray actualDocs = result.getJsonObject().getAsJsonArray("docs");
@@ -174,7 +174,7 @@ public class MultiGetIntegrationTest extends AbstractIntegrationTest {
     @Test
     public void getDocumentWithMultipleIdsWhenNonIndexedDocsAreRequested() throws IOException {
         Action action = new MultiGet.Builder.ById(TEST_INDEX, TEST_TYPE).addId("1").addId("3").addId("7").build();
-        JestResult result = client.execute(action);
+        QueryResult result = client.execute(action);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         JsonArray actualDocs = result.getJsonObject().getAsJsonArray("docs");

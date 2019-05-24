@@ -2,7 +2,7 @@ package com.jusdt.es.client.indices.reindex;
 
 import com.google.common.collect.ImmutableMap;
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.indices.reindex.Reindex;
 
 import org.elasticsearch.index.query.QueryBuilders;
@@ -44,7 +44,7 @@ public class ReindexIntegrationTest extends AbstractIntegrationTest {
         ImmutableMap<String, Object> source = ImmutableMap.of("index", sourceIndex);
         ImmutableMap<String, Object> dest = ImmutableMap.of("index", destIndex);
         Reindex reindex = new Reindex.Builder(source, dest).refresh(true).build();
-        JestResult result = client.execute(reindex);
+        QueryResult result = client.execute(reindex);
 
         assertTrue(result.getErrorMessage(), result.isSucceeded());
         assertTrue(indexExists(destIndex));
@@ -71,7 +71,7 @@ public class ReindexIntegrationTest extends AbstractIntegrationTest {
         ImmutableMap<String, Object> dest = ImmutableMap.of("index", destIndex);
 
         Reindex reindex = new Reindex.Builder(source, dest).refresh(true).build();
-        JestResult result = client.execute(reindex);
+        QueryResult result = client.execute(reindex);
 
         assertTrue(result.getErrorMessage(), result.isSucceeded());
         assertTrue(indexExists(destIndex));
@@ -100,7 +100,7 @@ public class ReindexIntegrationTest extends AbstractIntegrationTest {
         ImmutableMap<String, Object> dest = ImmutableMap.of("index", destIndex);
 
         Reindex reindex = new Reindex.Builder(source, dest).refresh(true).build();
-        JestResult result = client.execute(reindex);
+        QueryResult result = client.execute(reindex);
 
         assertTrue(result.getErrorMessage(), result.isSucceeded());
         assertFalse(indexExists(destIndex));
@@ -130,7 +130,7 @@ public class ReindexIntegrationTest extends AbstractIntegrationTest {
         ImmutableMap<String, Object> dest = ImmutableMap.of("index", destIndex);
 
         Reindex reindex = new Reindex.Builder(source, dest).script(scriptString).refresh(true).build();
-        JestResult result = client.execute(reindex);
+        QueryResult result = client.execute(reindex);
 
         assertTrue(result.getErrorMessage(), result.isSucceeded());
         assertTrue(indexExists(destIndex));

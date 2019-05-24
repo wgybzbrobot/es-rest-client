@@ -4,7 +4,7 @@ import java.io.UnsupportedEncodingException;
 
 import com.jusdt.es.common.action.AbstractAction;
 import com.jusdt.es.common.action.GenericResultAbstractAction;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 
 import static com.jusdt.es.common.indices.script.ScriptLanguage.PAINLESS;
 import static java.net.URLEncoder.encode;
@@ -22,7 +22,7 @@ public abstract class AbstractStoredScript extends GenericResultAbstractAction {
         this.scriptLanguage = builder.scriptLanguage;
     }
 
-    protected String buildURI(ElasticsearchVersion elasticsearchVersion) {
+    protected String buildURI(ElasticSearchVersion elasticsearchVersion) {
         String finalUri = super.buildURI(elasticsearchVersion) + "/_scripts/";
         try {
             finalUri += encode(scriptName, CHARSET);

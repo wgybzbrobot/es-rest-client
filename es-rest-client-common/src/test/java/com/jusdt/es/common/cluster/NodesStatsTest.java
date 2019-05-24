@@ -2,7 +2,7 @@ package com.jusdt.es.common.cluster;
 
 import org.junit.Test;
 
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.cluster.NodesStats;
 
 import static org.junit.Assert.assertEquals;
@@ -16,7 +16,7 @@ public class NodesStatsTest {
     public void testUriGeneration() throws Exception {
         NodesStats action = new NodesStats.Builder()
                 .build();
-        assertEquals("/_nodes/_all/stats", action.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("/_nodes/_all/stats", action.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
@@ -26,7 +26,7 @@ public class NodesStatsTest {
                 .withOs()
                 .withJvm()
                 .build();
-        assertEquals("/_nodes/james/stats/os,jvm", action.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("/_nodes/james/stats/os,jvm", action.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
 }

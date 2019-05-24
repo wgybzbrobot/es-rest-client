@@ -1,29 +1,29 @@
 package com.jusdt.es.common.action;
 
-import com.google.common.base.Joiner;
-
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-/**
- * @author cihat keser
- */
+import com.google.common.base.Joiner;
+
 @SuppressWarnings("unchecked")
-public abstract class AbstractMultiTypeActionBuilder<T extends Action, K> extends AbstractMultiIndexActionBuilder<T, K> {
-    private Set<String> indexTypes = new LinkedHashSet<String>();
+public abstract class AbstractMultiTypeActionBuilder<T extends Action<?>, K>
+		extends AbstractMultiIndexActionBuilder<T, K> {
 
-    public K addTypes(Collection<? extends String> indexTypes) {
-        this.indexTypes.addAll(indexTypes);
-        return (K) this;
-    }
+	private Set<String> indexTypes = new LinkedHashSet<String>();
 
-    public K addType(String indexType) {
-        this.indexTypes.add(indexType);
-        return (K) this;
-    }
+	public K addTypes(Collection<? extends String> indexTypes) {
+		this.indexTypes.addAll(indexTypes);
+		return (K) this;
+	}
 
-    public String getJoinedTypes() {
-        return Joiner.on(',').join(indexTypes);
-    }
+	public K addType(String indexType) {
+		this.indexTypes.add(indexType);
+		return (K) this;
+	}
+
+	public String getJoinedTypes() {
+		return Joiner.on(',').join(indexTypes);
+	}
+
 }

@@ -3,7 +3,7 @@ package com.jusdt.es.common.indices.script;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.indices.script.CreateStoredScript;
 
 import org.junit.Before;
@@ -52,12 +52,12 @@ public class CreateStoredScriptTest {
 
     @Test
     public void scriptingLanguageIsSetIntoPath() {
-        assertThat(script.buildURI(ElasticsearchVersion.UNKNOWN), containsString("/_scripts/"));
+        assertThat(script.buildURI(ElasticSearchVersion.UNKNOWN), containsString("/_scripts/"));
     }
 
     @Test
     public void nameOfTheScriptIsSetIntoPath() {
-        assertThat(script.buildURI(ElasticsearchVersion.UNKNOWN), containsString("/_scripts/" + A_NAME));
+        assertThat(script.buildURI(ElasticSearchVersion.UNKNOWN), containsString("/_scripts/" + A_NAME));
     }
 
     @Test

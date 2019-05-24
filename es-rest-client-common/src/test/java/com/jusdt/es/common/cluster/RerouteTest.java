@@ -1,7 +1,7 @@
 package com.jusdt.es.common.cluster;
 
 import com.google.gson.Gson;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.cluster.Reroute;
 import com.jusdt.es.common.cluster.reroute.RerouteAllocateReplica;
 import com.jusdt.es.common.cluster.reroute.RerouteCancel;
@@ -27,7 +27,7 @@ public class RerouteTest {
         moveCommands.add(new RerouteAllocateReplica("index3", 1, "node3"));
 
         Reroute reroute = new Reroute.Builder(moveCommands).build();
-        assertEquals("/_cluster/reroute", reroute.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("/_cluster/reroute", reroute.getURI(ElasticSearchVersion.UNKNOWN));
         assertEquals("POST", reroute.getRestMethodName());
 
         String expectedData = "{ \"commands\": [" +

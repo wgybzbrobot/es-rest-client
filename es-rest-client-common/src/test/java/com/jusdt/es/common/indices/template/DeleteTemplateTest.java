@@ -2,7 +2,7 @@ package com.jusdt.es.common.indices.template;
 
 import org.junit.Test;
 
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.indices.template.DeleteTemplate;
 
 import static org.junit.Assert.assertEquals;
@@ -15,7 +15,7 @@ public class DeleteTemplateTest {
         DeleteTemplate deleteTemplate = new DeleteTemplate.Builder("personal_tweet").build();
 
         assertEquals("DELETE", deleteTemplate.getRestMethodName());
-        assertEquals("_template/personal_tweet", deleteTemplate.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("_template/personal_tweet", deleteTemplate.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test

@@ -14,262 +14,264 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSyntaxException;
 import com.jusdt.es.common.action.AbstractAction;
 import com.jusdt.es.common.action.AbstractMultiTypeActionBuilder;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.core.search.sort.Sort;
 import com.jusdt.es.common.params.Parameters;
 import com.jusdt.es.common.params.SearchType;
 
-/**
- * @author Dogukan Sonmez
- * @author cihat keser
- */
 public class Search extends AbstractAction<SearchResult> {
 
-    private String query;
-    private List<Sort> sortList;
-    protected List<String> includePatternList;
-    protected List<String> excludePatternList;
-    private final String templateSuffix;
+	private String query;
+	private List<Sort> sortList;
+	protected List<String> includePatternList;
+	protected List<String> excludePatternList;
+	private final String templateSuffix;
 
-    protected Search(Builder builder) {
-        this(builder, "");
-    }
+	protected Search(Builder builder) {
+		this(builder, "");
+	}
 
-    protected Search(TemplateBuilder templatedBuilder) {
-        this(templatedBuilder, "/template");
-    }
+	protected Search(TemplateBuilder templatedBuilder) {
+		this(templatedBuilder, "/template");
+	}
 
-    private Search(Builder builder, String templateSuffix) {
-        super(builder);
-        this.query = builder.query;
-        this.sortList = builder.sortList;
-        this.includePatternList = builder.includePatternList;
-        this.excludePatternList = builder.excludePatternList;
-        this.templateSuffix = templateSuffix;
-    }
+	private Search(Builder builder, String templateSuffix) {
+		super(builder);
+		this.query = builder.query;
+		this.sortList = builder.sortList;
+		this.includePatternList = builder.includePatternList;
+		this.excludePatternList = builder.excludePatternList;
+		this.templateSuffix = templateSuffix;
+	}
 
-    @Override
-    public SearchResult createNewElasticSearchResult(String responseBody, int statusCode, String reasonPhrase, Gson gson) {
-        return createNewElasticSearchResult(new SearchResult(gson), responseBody, statusCode, reasonPhrase, gson);
-    }
+	@Override
+	public SearchResult createNewElasticSearchResult(String responseBody, int statusCode, String reasonPhrase,
+			Gson gson) {
+		return createNewElasticSearchResult(new SearchResult(gson), responseBody, statusCode, reasonPhrase, gson);
+	}
 
-    public String getIndex() {
-        return this.indexName;
-    }
+	public String getIndex() {
+		return this.indexName;
+	}
 
-    public String getType() {
-        return this.typeName;
-    }
+	public String getType() {
+		return this.typeName;
+	}
 
-    @Override
-    protected String buildURI(ElasticsearchVersion elasticsearchVersion) {
-        return super.buildURI(elasticsearchVersion) + "/_search" + templateSuffix;
-    }
+	@Override
+	protected String buildURI(ElasticSearchVersion elasticsearchVersion) {
+		return super.buildURI(elasticsearchVersion) + "/_search" + templateSuffix;
+	}
 
-    @Override
-    public String getPathToResult() {
-        return "hits/hits/_source";
-    }
+	@Override
+	public String getPathToResult() {
+		return "hits/hits/_source";
+	}
 
-    @Override
-    public String getRestMethodName() {
-        return "POST";
-    }
+	@Override
+	public String getRestMethodName() {
+		return "POST";
+	}
 
-    @Override
-    public String getData(Gson gson) {
-        String data;
-        if (sortList.isEmpty() && includePatternList.isEmpty() && excludePatternList.isEmpty()) {
-            data = query;
-        } else {
-            JsonObject queryObject = gson.fromJson(query, JsonObject.class);
+	@Override
+	public String getData(Gson gson) {
+		String data;
+		if (sortList.isEmpty() && includePatternList.isEmpty() && excludePatternList.isEmpty()) {
+			data = query;
+		} else {
+			JsonObject queryObject = gson.fromJson(query, JsonObject.class);
 
-            if (queryObject == null) {
-                queryObject = new JsonObject();
-            }
+			if (queryObject == null) {
+				queryObject = new JsonObject();
+			}
 
-            if (!sortList.isEmpty()) {
-                JsonArray sortArray = normalizeSortClause(queryObject);
+			if (!sortList.isEmpty()) {
+				JsonArray sortArray = normalizeSortClause(queryObject);
 
-                for (Sort sort : sortList) {
-                    sortArray.add(sort.toJsonObject());
-                }
-            }
+				for (Sort sort : sortList) {
+					sortArray.add(sort.toJsonObject());
+				}
+			}
 
-            if (!includePatternList.isEmpty() || !excludePatternList.isEmpty()) {
-                JsonObject sourceObject = normalizeSourceClause(queryObject);
+			if (!includePatternList.isEmpty() || !excludePatternList.isEmpty()) {
+				JsonObject sourceObject = normalizeSourceClause(queryObject);
 
-                addPatternListToSource(sourceObject, "includes", includePatternList);
-                addPatternListToSource(sourceObject, "excludes", excludePatternList);
-            }
+				addPatternListToSource(sourceObject, "includes", includePatternList);
+				addPatternListToSource(sourceObject, "excludes", excludePatternList);
+			}
 
-            data = gson.toJson(queryObject);
-        }
-        return data;
-    }
+			data = gson.toJson(queryObject);
+		}
 
-    private static JsonArray normalizeSortClause(JsonObject queryObject) {
-        JsonArray sortArray;
-        if (queryObject.has("sort")) {
-            JsonElement sortElement = queryObject.get("sort");
-            if (sortElement.isJsonArray()) {
-                sortArray = sortElement.getAsJsonArray();
-            } else if (sortElement.isJsonObject()) {
-                sortArray = new JsonArray();
-                sortArray.add(sortElement.getAsJsonObject());
-            } else if (sortElement.isJsonPrimitive() && sortElement.getAsJsonPrimitive().isString()) {
-                String sortField = sortElement.getAsString();
-                sortArray = new JsonArray();
-                queryObject.add("sort", sortArray);
-                String order;
-                if ("_score".equals(sortField)) {
-                    order = "desc";
-                } else {
-                    order = "asc";
-                }
-                JsonObject sortOrder = new JsonObject();
-                sortOrder.add("order", new JsonPrimitive(order));
-                JsonObject sortDefinition = new JsonObject();
-                sortDefinition.add(sortField, sortOrder);
+		return data;
+	}
 
-                sortArray.add(sortDefinition);
-            } else {
-                throw new JsonSyntaxException("_source must be an array, an object or a string");
-            }
-        } else {
-            sortArray = new JsonArray();
-        }
-        queryObject.add("sort", sortArray);
+	private static JsonArray normalizeSortClause(JsonObject queryObject) {
+		JsonArray sortArray;
+		if (queryObject.has("sort")) {
+			JsonElement sortElement = queryObject.get("sort");
+			if (sortElement.isJsonArray()) {
+				sortArray = sortElement.getAsJsonArray();
+			} else if (sortElement.isJsonObject()) {
+				sortArray = new JsonArray();
+				sortArray.add(sortElement.getAsJsonObject());
+			} else if (sortElement.isJsonPrimitive() && sortElement.getAsJsonPrimitive().isString()) {
+				String sortField = sortElement.getAsString();
+				sortArray = new JsonArray();
+				queryObject.add("sort", sortArray);
+				String order;
+				if ("_score".equals(sortField)) {
+					order = "desc";
+				} else {
+					order = "asc";
+				}
+				JsonObject sortOrder = new JsonObject();
+				sortOrder.add("order", new JsonPrimitive(order));
+				JsonObject sortDefinition = new JsonObject();
+				sortDefinition.add(sortField, sortOrder);
 
-        return sortArray;
-    }
+				sortArray.add(sortDefinition);
+			} else {
+				throw new JsonSyntaxException("_source must be an array, an object or a string");
+			}
+		} else {
+			sortArray = new JsonArray();
+		}
+		queryObject.add("sort", sortArray);
 
-    private static JsonObject normalizeSourceClause(JsonObject queryObject) {
-        JsonObject sourceObject;
-        if (queryObject.has("_source")) {
-            JsonElement sourceElement = queryObject.get("_source");
+		return sortArray;
+	}
 
-            if (sourceElement.isJsonObject()) {
-                sourceObject = sourceElement.getAsJsonObject();
-            } else if (sourceElement.isJsonArray()) {
-                // in this case, the values of the array are includes
-                sourceObject = new JsonObject();
-                queryObject.add("_source", sourceObject);
-                sourceObject.add("includes", sourceElement.getAsJsonArray());
-            } else if (sourceElement.isJsonPrimitive() && sourceElement.getAsJsonPrimitive().isBoolean()) {
-                // if _source is a boolean, we override the configuration with include/exclude
-                sourceObject = new JsonObject();
-            } else {
-                throw new JsonSyntaxException("_source must be an object, an array or a boolean");
-            }
-        } else {
-            sourceObject = new JsonObject();
-        }
-        queryObject.add("_source", sourceObject);
+	private static JsonObject normalizeSourceClause(JsonObject queryObject) {
+		JsonObject sourceObject;
+		if (queryObject.has("_source")) {
+			JsonElement sourceElement = queryObject.get("_source");
 
-        return sourceObject;
-    }
+			if (sourceElement.isJsonObject()) {
+				sourceObject = sourceElement.getAsJsonObject();
+			} else if (sourceElement.isJsonArray()) {
+				// in this case, the values of the array are includes
+				sourceObject = new JsonObject();
+				queryObject.add("_source", sourceObject);
+				sourceObject.add("includes", sourceElement.getAsJsonArray());
+			} else if (sourceElement.isJsonPrimitive() && sourceElement.getAsJsonPrimitive().isBoolean()) {
+				// if _source is a boolean, we override the configuration with include/exclude
+				sourceObject = new JsonObject();
+			} else {
+				throw new JsonSyntaxException("_source must be an object, an array or a boolean");
+			}
+		} else {
+			sourceObject = new JsonObject();
+		}
+		queryObject.add("_source", sourceObject);
 
-    private static void addPatternListToSource(JsonObject sourceObject, String rule, List<String> patternList) {
-        if (!patternList.isEmpty()) {
-            JsonArray ruleArray;
-            if (sourceObject.has(rule)) {
-                ruleArray = sourceObject.get(rule).getAsJsonArray();
-            } else {
-                ruleArray = new JsonArray();
-                sourceObject.add(rule, ruleArray);
-            }
-            for (String pattern : patternList) {
-                ruleArray.add(pattern);
-            }
-        }
-    }
+		return sourceObject;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), query, sortList, includePatternList, excludePatternList);
-    }
+	private static void addPatternListToSource(JsonObject sourceObject, String rule, List<String> patternList) {
+		if (!patternList.isEmpty()) {
+			JsonArray ruleArray;
+			if (sourceObject.has(rule)) {
+				ruleArray = sourceObject.get(rule).getAsJsonArray();
+			} else {
+				ruleArray = new JsonArray();
+				sourceObject.add(rule, ruleArray);
+			}
+			for (String pattern : patternList) {
+				ruleArray.add(pattern);
+			}
+		}
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
+	@Override
+	public int hashCode() {
+		return Objects.hash(super.hashCode(), query, sortList, includePatternList, excludePatternList);
+	}
 
-        Search rhs = (Search) obj;
-        return super.equals(obj)
-                && Objects.equals(query, rhs.query)
-                && Objects.equals(sortList, rhs.sortList)
-                && Objects.equals(includePatternList, rhs.includePatternList)
-                && Objects.equals(excludePatternList, rhs.excludePatternList);
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (obj == this) {
+			return true;
+		}
+		if (obj.getClass() != getClass()) {
+			return false;
+		}
 
-    public static class Builder extends AbstractMultiTypeActionBuilder<Search, Builder> {
-        protected String query;
-        protected List<Sort> sortList = new LinkedList<Sort>();
-        protected List<String> includePatternList = new ArrayList<String>();
-        protected List<String> excludePatternList = new ArrayList<String>();
+		Search rhs = (Search) obj;
 
-        public Builder(String query) {
-            this.query = query;
-        }
+		return super.equals(obj) && Objects.equals(query, rhs.query) && Objects.equals(sortList, rhs.sortList)
+				&& Objects.equals(includePatternList, rhs.includePatternList)
+				&& Objects.equals(excludePatternList, rhs.excludePatternList);
+	}
 
-        public Builder setSearchType(SearchType searchType) {
-            return setParameter(Parameters.SEARCH_TYPE, searchType);
-        }
+	public static class Builder extends AbstractMultiTypeActionBuilder<Search, Builder> {
 
-        public Builder enableTrackScores() {
-            this.setParameter(Parameters.TRACK_SCORES, true);
-            return this;
-        }
+		protected String query;
+		protected List<Sort> sortList = new LinkedList<>();
+		protected List<String> includePatternList = new ArrayList<>();
+		protected List<String> excludePatternList = new ArrayList<>();
 
-        public Builder addSort(Sort sort) {
-            sortList.add(sort);
-            return this;
-        }
+		public Builder(String query) {
+			this.query = query;
+		}
 
-        public Builder addSourceExcludePattern(String excludePattern) {
-            excludePatternList.add(excludePattern);
-            return this;
-        }
+		public Builder setSearchType(SearchType searchType) {
+			return setParameter(Parameters.SEARCH_TYPE, searchType);
+		}
 
-        public Builder addSourceIncludePattern(String includePattern) {
-            includePatternList.add(includePattern);
-            return this;
-        }
+		public Builder enableTrackScores() {
+			this.setParameter(Parameters.TRACK_SCORES, true);
+			return this;
+		}
 
-        public Builder addSort(Collection<Sort> sorts) {
-            sortList.addAll(sorts);
-            return this;
-        }
+		public Builder addSort(Sort sort) {
+			sortList.add(sort);
+			return this;
+		}
 
-        @Override
-        public Search build() {
-            return new Search(this);
-        }
-    }
+		public Builder addSourceExcludePattern(String excludePattern) {
+			excludePatternList.add(excludePattern);
+			return this;
+		}
 
-    public static class VersionBuilder extends Builder {
-        public VersionBuilder(String query) {
-            super(query);
-            this.setParameter(Parameters.VERSION, "true");
-        }
-    }
+		public Builder addSourceIncludePattern(String includePattern) {
+			includePatternList.add(includePattern);
+			return this;
+		}
 
-    public static class TemplateBuilder extends Builder {
-    	public TemplateBuilder(String templatedQuery) {
-            super(templatedQuery);
-        }
+		public Builder addSort(Collection<Sort> sorts) {
+			sortList.addAll(sorts);
+			return this;
+		}
 
-    	@Override
-        public Search build() {
-            return new Search(this);
-        }
-    }
+		@Override
+		public Search build() {
+			return new Search(this);
+		}
+
+	}
+
+	public static class VersionBuilder extends Builder {
+		public VersionBuilder(String query) {
+			super(query);
+			this.setParameter(Parameters.VERSION, "true");
+		}
+	}
+
+	public static class TemplateBuilder extends Builder {
+
+		public TemplateBuilder(String templatedQuery) {
+			super(templatedQuery);
+		}
+
+		@Override
+		public Search build() {
+			return new Search(this);
+		}
+
+	}
+
 }

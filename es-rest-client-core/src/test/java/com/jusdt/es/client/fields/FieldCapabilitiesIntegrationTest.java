@@ -2,7 +2,7 @@ package com.jusdt.es.client.fields;
 
 import com.google.common.collect.ImmutableMap;
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.core.DocumentResult;
 import com.jusdt.es.common.core.Index;
 import com.jusdt.es.common.fields.FieldCapabilities;
@@ -41,7 +41,7 @@ public class FieldCapabilitiesIntegrationTest extends AbstractIntegrationTest {
 
         FieldCapabilities fieldCapabilities = new FieldCapabilities.Builder(FIELDS).build();
 
-        JestResult fieldCapabilitiesResult = client.execute(fieldCapabilities);
+        QueryResult fieldCapabilitiesResult = client.execute(fieldCapabilities);
 
         assertTrue(fieldCapabilitiesResult.getErrorMessage(), fieldCapabilitiesResult.isSucceeded());
     }

@@ -3,10 +3,10 @@ package com.jusdt.es.client.http;
 import com.google.gson.Gson;
 import com.jusdt.es.common.action.Action;
 import com.jusdt.es.common.client.AbstractJestClient;
-import com.jusdt.es.common.client.JestResult;
-import com.jusdt.es.common.client.JestResultHandler;
+import com.jusdt.es.common.client.QueryResult;
+import com.jusdt.es.common.client.QueryResultHandler;
 import com.jusdt.es.common.client.config.CouldNotConnectException;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntityEnclosingRequest;
@@ -50,7 +50,7 @@ public class JestHttpClient extends AbstractJestClient {
 
     private HttpClientContext httpClientContextTemplate;
 
-    private ElasticsearchVersion elasticsearchVersion = ElasticsearchVersion.UNKNOWN;
+    private ElasticSearchVersion elasticsearchVersion = ElasticSearchVersion.UNKNOWN;
 
     /**
      * @throws IOException in case of a problem or the connection was aborted during request,
@@ -58,11 +58,11 @@ public class JestHttpClient extends AbstractJestClient {
      * @throws CouldNotConnectException if an {@link HttpHostConnectException} is encountered
      */
     @Override
-    public <T extends JestResult> T execute(Action<T> clientRequest) throws IOException {
+    public <T extends QueryResult> T execute(Action<T> clientRequest) throws IOException {
         return execute(clientRequest, null);
     }
 
-    public <T extends JestResult> T execute(Action<T> clientRequest, RequestConfig requestConfig) throws IOException {
+    public <T extends QueryResult> T execute(Action<T> clientRequest, RequestConfig requestConfig) throws IOException {
         HttpUriRequest request = prepareRequest(clientRequest, requestConfig);
         CloseableHttpResponse response = null;
         try {
@@ -82,11 +82,11 @@ public class JestHttpClient extends AbstractJestClient {
     }
 
     @Override
-    public <T extends JestResult> void executeAsync(final Action<T> clientRequest, final JestResultHandler<? super T> resultHandler) {
+    public <T extends QueryResult> void executeAsync(final Action<T> clientRequest, final QueryResultHandler<? super T> resultHandler) {
         executeAsync(clientRequest, resultHandler, null);
     }
 
-    public <T extends JestResult> void executeAsync(final Action<T> clientRequest, final JestResultHandler<? super T> resultHandler, final RequestConfig requestConfig) {
+    public <T extends QueryResult> void executeAsync(final Action<T> clientRequest, final QueryResultHandler<? super T> resultHandler, final RequestConfig requestConfig) {
         synchronized (this) {
             if (!asyncClient.isRunning()) {
                 asyncClient.start();
@@ -113,7 +113,7 @@ public class JestHttpClient extends AbstractJestClient {
         httpClient.close();
     }
 
-    protected <T extends JestResult> HttpUriRequest prepareRequest(final Action<T> clientRequest, final RequestConfig requestConfig) {
+    protected <T extends QueryResult> HttpUriRequest prepareRequest(final Action<T> clientRequest, final RequestConfig requestConfig) {
         String elasticSearchRestUrl = getRequestURL(getNextServer(), clientRequest.getURI(elasticsearchVersion));
         HttpUriRequest request = constructHttpMethod(clientRequest.getRestMethodName(), elasticSearchRestUrl, clientRequest.getData(gson), requestConfig);
 
@@ -135,7 +135,7 @@ public class JestHttpClient extends AbstractJestClient {
         return httpClient.execute(request);
     }
 
-    protected <T extends JestResult> Future<HttpResponse> executeAsyncRequest(Action<T> clientRequest, JestResultHandler<? super T> resultHandler, HttpUriRequest request) {
+    protected <T extends QueryResult> Future<HttpResponse> executeAsyncRequest(Action<T> clientRequest, QueryResultHandler<? super T> resultHandler, HttpUriRequest request) {
         if (httpClientContextTemplate != null) {
             return asyncClient.execute(request, createContextInstance(), new DefaultCallback<T>(clientRequest, request, resultHandler));
         }
@@ -190,7 +190,7 @@ public class JestHttpClient extends AbstractJestClient {
         return httpUriRequest;
     }
 
-    private <T extends JestResult> T deserializeResponse(HttpResponse response, final HttpRequest httpRequest, Action<T> clientRequest) throws IOException {
+    private <T extends QueryResult> T deserializeResponse(HttpResponse response, final HttpRequest httpRequest, Action<T> clientRequest) throws IOException {
         StatusLine statusLine = response.getStatusLine();
         try {
             return clientRequest.createNewElasticSearchResult(
@@ -245,16 +245,16 @@ public class JestHttpClient extends AbstractJestClient {
         this.httpClientContextTemplate = httpClientContext;
     }
 
-    public void setElasticsearchVersion(ElasticsearchVersion elasticsearchVersion) {
+    public void setElasticsearchVersion(ElasticSearchVersion elasticsearchVersion) {
         this.elasticsearchVersion = elasticsearchVersion;
     }
 
-    protected class DefaultCallback<T extends JestResult> implements FutureCallback<HttpResponse> {
+    protected class DefaultCallback<T extends QueryResult> implements FutureCallback<HttpResponse> {
         private final Action<T> clientRequest;
         private final HttpRequest request;
-        private final JestResultHandler<? super T> resultHandler;
+        private final QueryResultHandler<? super T> resultHandler;
 
-        public DefaultCallback(Action<T> clientRequest, final HttpRequest request, JestResultHandler<? super T> resultHandler) {
+        public DefaultCallback(Action<T> clientRequest, final HttpRequest request, QueryResultHandler<? super T> resultHandler) {
             this.clientRequest = clientRequest;
             this.request = request;
             this.resultHandler = resultHandler;

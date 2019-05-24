@@ -2,7 +2,7 @@ package com.jusdt.es.common.indices.template;
 
 import org.junit.Test;
 
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.indices.template.GetTemplate;
 
 import static org.junit.Assert.assertEquals;
@@ -15,7 +15,7 @@ public class GetTemplateTest {
         GetTemplate getTemplate = new GetTemplate.Builder("personal_tweet").build();
 
         assertEquals("GET", getTemplate.getRestMethodName());
-        assertEquals("_template/personal_tweet", getTemplate.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("_template/personal_tweet", getTemplate.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test

@@ -3,7 +3,7 @@ package com.jusdt.es.common.indices.aliases;
 import com.google.common.base.Joiner;
 import com.jusdt.es.common.action.AbstractMultiIndexActionBuilder;
 import com.jusdt.es.common.action.GenericResultAbstractAction;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 
 import java.util.Collection;
 import java.util.LinkedHashSet;
@@ -26,7 +26,7 @@ public class GetAliases extends GenericResultAbstractAction {
     }
 
     @Override
-    protected String buildURI(ElasticsearchVersion elasticsearchVersion) {
+    protected String buildURI(ElasticSearchVersion elasticsearchVersion) {
         if (aliasName == null){
             return super.buildURI(elasticsearchVersion) + "/_alias";
         } else {

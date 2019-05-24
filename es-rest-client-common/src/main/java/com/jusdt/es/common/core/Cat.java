@@ -1,5 +1,8 @@
 package com.jusdt.es.common.core;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import com.google.common.base.Joiner;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -10,213 +13,226 @@ import com.jusdt.es.common.action.AbstractAction;
 import com.jusdt.es.common.action.AbstractMultiINodeActionBuilder;
 import com.jusdt.es.common.action.AbstractMultiIndexActionBuilder;
 import com.jusdt.es.common.action.AbstractMultiTypeActionBuilder;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.strings.StringUtils;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
-/**
- * @author Bartosz Polnik
- */
 public class Cat extends AbstractAction<CatResult> {
-    private final static String PATH_TO_RESULT = "result";
-    private final String operationPath;
 
-    protected <T extends AbstractAction.Builder<Cat, ? extends Builder> & CatBuilder> Cat(T builder) {
-        super(builder);
-        this.operationPath = builder.operationPath();
-    }
+	private final static String PATH_TO_RESULT = "result";
+	private final String operationPath;
 
-    @Override
-    protected String buildURI(ElasticsearchVersion elasticsearchVersion) {
-        String uriSuffix = super.buildURI(elasticsearchVersion);
-        try {
-            if (!StringUtils.isBlank(nodes)) {
-                uriSuffix += URLEncoder.encode(nodes, CHARSET);
-            }
-        } catch (UnsupportedEncodingException e) {
-            log.error("Error occurred while adding nodes to uri", e);
-        }
-        return "_cat/" + this.operationPath + (uriSuffix.isEmpty() ? "" : "/") + uriSuffix;
-    }
+	protected <T extends AbstractAction.Builder<Cat, ? extends Builder> & CatBuilder> Cat(T builder) {
+		super(builder);
+		this.operationPath = builder.operationPath();
+	}
 
-    @Override
-    public String getRestMethodName() {
-        return "GET";
-    }
+	@Override
+	protected String buildURI(ElasticSearchVersion elasticsearchVersion) {
+		String uriSuffix = super.buildURI(elasticsearchVersion);
+		try {
+			if (!StringUtils.isBlank(nodes)) {
+				uriSuffix += URLEncoder.encode(nodes, CHARSET);
+			}
+		} catch (UnsupportedEncodingException e) {
+			log.error("Error occurred while adding nodes to uri", e);
+		}
+		return "_cat/" + this.operationPath + (uriSuffix.isEmpty() ? "" : "/") + uriSuffix;
+	}
 
-    @Override
-    public String getPathToResult() {
-        return PATH_TO_RESULT;
-    }
+	@Override
+	public String getRestMethodName() {
+		return "GET";
+	}
 
-    @Override
-    public CatResult createNewElasticSearchResult(String responseBody, int statusCode, String reasonPhrase, Gson gson) {
-        return createNewElasticSearchResult(new CatResult(gson), responseBody, statusCode, reasonPhrase, gson);
-    }
+	@Override
+	public String getPathToResult() {
+		return PATH_TO_RESULT;
+	}
 
-    @Override
-    protected JsonObject parseResponseBody(String responseBody) {
-        if (responseBody == null || responseBody.trim().isEmpty()) {
-            return new JsonObject();
-        }
+	@Override
+	public CatResult createNewElasticSearchResult(String responseBody, int statusCode, String reasonPhrase, Gson gson) {
+		return createNewElasticSearchResult(new CatResult(gson), responseBody, statusCode, reasonPhrase, gson);
+	}
 
-        JsonElement parsed = new JsonParser().parse(responseBody);
-        if (parsed.isJsonArray()) {
-            JsonObject result = new JsonObject();
-            result.add(PATH_TO_RESULT, parsed.getAsJsonArray());
-            return result;
-        } else {
-            throw new JsonSyntaxException("Cat response did not contain a JSON Array");
-        }
-    }
+	@Override
+	protected JsonObject parseResponseBody(String responseBody) {
+		if (responseBody == null || responseBody.trim().isEmpty()) {
+			return new JsonObject();
+		}
 
-    public static class IndicesBuilder extends AbstractMultiTypeActionBuilder<Cat, IndicesBuilder> implements CatBuilder {
-        private static final String operationPath = "indices";
+		JsonElement parsed = new JsonParser().parse(responseBody);
+		if (parsed.isJsonArray()) {
+			JsonObject result = new JsonObject();
+			result.add(PATH_TO_RESULT, parsed.getAsJsonArray());
+			return result;
+		} else {
+			throw new JsonSyntaxException("Cat response did not contain a JSON Array");
+		}
+	}
 
-        public IndicesBuilder() {
-            setHeader("accept", "application/json");
-            setHeader("content-type", "application/json");
-        }
+	public static class IndicesBuilder extends AbstractMultiTypeActionBuilder<Cat, IndicesBuilder>
+			implements CatBuilder {
 
-        @Override
-        public Cat build() {
-            return new Cat(this);
-        }
+		private static final String operationPath = "indices";
 
-        @Override
-        public String operationPath() {
-            return operationPath;
-        }
-    }
+		public IndicesBuilder() {
+			setHeader("accept", "application/json");
+			setHeader("content-type", "application/json");
+		}
 
-    public static class AliasesBuilder extends AbstractMultiIndexActionBuilder<Cat, AliasesBuilder> implements CatBuilder {
-        private static final String operationPath = "aliases";
-        public AliasesBuilder() {
-            setHeader("accept", "application/json");
-            setHeader("content-type", "application/json");
-        }
+		@Override
+		public Cat build() {
+			return new Cat(this);
+		}
 
-        @Override
-        public Cat build() {
-            return new Cat(this);
-        }
+		@Override
+		public String operationPath() {
+			return operationPath;
+		}
 
-        @Override
-        public String operationPath() { return operationPath; }
-    }
+	}
 
-    public static class RecoveryBuilder extends AbstractMultiIndexActionBuilder<Cat, RecoveryBuilder> implements CatBuilder {
-        private static final String operationPath = "recovery";
-        public RecoveryBuilder() {
-            setHeader("accept", "application/json");
-            setHeader("content-type", "application/json");
-        }
+	public static class AliasesBuilder extends AbstractMultiIndexActionBuilder<Cat, AliasesBuilder>
+			implements CatBuilder {
+		private static final String operationPath = "aliases";
 
-        @Override
-        public Cat build() { return new Cat(this); }
+		public AliasesBuilder() {
+			setHeader("accept", "application/json");
+			setHeader("content-type", "application/json");
+		}
 
-        @Override
-        public String operationPath() {
-            return operationPath;
-        }
+		@Override
+		public Cat build() {
+			return new Cat(this);
+		}
 
-    }
+		@Override
+		public String operationPath() {
+			return operationPath;
+		}
 
-    public static class ShardsBuilder extends AbstractMultiIndexActionBuilder<Cat, ShardsBuilder> implements CatBuilder {
-        private static final String operationPath = "shards";
-        public ShardsBuilder() {
-            setHeader("accept", "application/json");
-            setHeader("content-type", "application/json");
-        }
+	}
 
-        @Override
-        public Cat build() {
-            return new Cat(this);
-        }
+	public static class RecoveryBuilder extends AbstractMultiIndexActionBuilder<Cat, RecoveryBuilder>
+			implements CatBuilder {
+		private static final String operationPath = "recovery";
 
-        @Override
-        public String operationPath() {
-            return operationPath;
-        }
+		public RecoveryBuilder() {
+			setHeader("accept", "application/json");
+			setHeader("content-type", "application/json");
+		}
 
-        @Override
-        public String getJoinedIndices() {
-            if (indexNames.size() > 0) {
-                return Joiner.on(',').join(indexNames);
-            } else {
-                return null;
-            }
-        }
-    }
+		@Override
+		public Cat build() {
+			return new Cat(this);
+		}
 
-    public static class SegmentsBuilder extends AbstractMultiIndexActionBuilder<Cat, SegmentsBuilder> implements CatBuilder {
-        private static final String operationPath = "segments";
-        public SegmentsBuilder() {
-            setHeader("accept", "application/json");
-            setHeader("content-type", "application/json");
-        }
+		@Override
+		public String operationPath() {
+			return operationPath;
+		}
 
-        @Override
-        public Cat build() {
-            return new Cat(this);
-        }
+	}
 
-        @Override
-        public String operationPath() {
-            return operationPath;
-        }
+	public static class ShardsBuilder extends AbstractMultiIndexActionBuilder<Cat, ShardsBuilder>
+			implements CatBuilder {
+		private static final String operationPath = "shards";
 
-        @Override
-        public String getJoinedIndices() {
-            return indexNames.size() > 0 ? Joiner.on(',').join(indexNames) : null;
-        }
-    }
+		public ShardsBuilder() {
+			setHeader("accept", "application/json");
+			setHeader("content-type", "application/json");
+		}
 
-    public static class NodesBuilder extends AbstractAction.Builder<Cat, NodesBuilder> implements CatBuilder {
-        private static final String operationPath = "nodes";
-        public NodesBuilder() {
-            setHeader("accept", "application/json");
-            setHeader("content-type", "application/json");
-        }
+		@Override
+		public Cat build() {
+			return new Cat(this);
+		}
 
-        @Override
-        public Cat build() {
-            return new Cat(this);
-        }
+		@Override
+		public String operationPath() {
+			return operationPath;
+		}
 
-        @Override
-        public String operationPath() {
-            return operationPath;
-        }
-    }
+		@Override
+		public String getJoinedIndices() {
+			if (indexNames.size() > 0) {
+				return Joiner.on(',').join(indexNames);
+			} else {
+				return null;
+			}
+		}
+	}
 
-    public static class AllocationBuilder extends AbstractMultiINodeActionBuilder<Cat, AllocationBuilder> implements CatBuilder {
-        private static final String operationPath = "allocation";
+	public static class SegmentsBuilder extends AbstractMultiIndexActionBuilder<Cat, SegmentsBuilder>
+			implements CatBuilder {
+		private static final String operationPath = "segments";
 
-        public AllocationBuilder() {
-            setHeader("accept", "application/json");
-            setHeader("content-type", "application/json");
-        }
+		public SegmentsBuilder() {
+			setHeader("accept", "application/json");
+			setHeader("content-type", "application/json");
+		}
 
-        @Override
-        public Cat build() {
-            return new Cat(this);
-        }
+		@Override
+		public Cat build() {
+			return new Cat(this);
+		}
 
-        @Override
-        public String operationPath() {
-            return operationPath;
-        }
+		@Override
+		public String operationPath() {
+			return operationPath;
+		}
 
-        @Override
-        public String getJoinedNodes() {
-            return nodes.isEmpty() ? null : Joiner.on(',').join(nodes); 
-        }
-    }
+		@Override
+		public String getJoinedIndices() {
+			return indexNames.size() > 0 ? Joiner.on(',').join(indexNames) : null;
+		}
+	}
 
-    protected interface CatBuilder {
-        String operationPath();
-    }
+	public static class NodesBuilder extends AbstractAction.Builder<Cat, NodesBuilder> implements CatBuilder {
+		private static final String operationPath = "nodes";
+
+		public NodesBuilder() {
+			setHeader("accept", "application/json");
+			setHeader("content-type", "application/json");
+		}
+
+		@Override
+		public Cat build() {
+			return new Cat(this);
+		}
+
+		@Override
+		public String operationPath() {
+			return operationPath;
+		}
+	}
+
+	public static class AllocationBuilder extends AbstractMultiINodeActionBuilder<Cat, AllocationBuilder>
+			implements CatBuilder {
+		private static final String operationPath = "allocation";
+
+		public AllocationBuilder() {
+			setHeader("accept", "application/json");
+			setHeader("content-type", "application/json");
+		}
+
+		@Override
+		public Cat build() {
+			return new Cat(this);
+		}
+
+		@Override
+		public String operationPath() {
+			return operationPath;
+		}
+
+		@Override
+		public String getJoinedNodes() {
+			return nodes.isEmpty() ? null : Joiner.on(',').join(nodes);
+		}
+	}
+
+	protected interface CatBuilder {
+		String operationPath();
+	}
 }

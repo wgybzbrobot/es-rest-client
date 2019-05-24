@@ -2,8 +2,8 @@ package com.jusdt.es.common.core;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
-import com.jusdt.es.common.annotations.JestId;
-import com.jusdt.es.common.annotations.JestVersion;
+import com.jusdt.es.common.annotations.ESClientId;
+import com.jusdt.es.common.annotations.ESClientVersion;
 import com.jusdt.es.common.core.SearchResult;
 
 import org.junit.Test;
@@ -510,10 +510,10 @@ public class SearchResultTest {
     }
 
     class TestObject {
-        @JestId
+        @ESClientId
         private String id;
 
-        @JestVersion
+        @ESClientVersion
         private Long version;
 
         public TestObject() {}

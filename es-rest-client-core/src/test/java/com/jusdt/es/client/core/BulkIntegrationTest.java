@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.jusdt.es.client.common.AbstractIntegrationTest;
 import com.jusdt.es.client.config.HttpClientConfig;
 import com.jusdt.es.client.http.JestHttpClient;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.core.Bulk;
 import com.jusdt.es.common.core.BulkResult;
 import com.jusdt.es.common.core.Delete;
@@ -41,7 +41,7 @@ public class BulkIntegrationTest extends AbstractIntegrationTest {
     public void createIndex() throws IOException {
         CreateIndex createIndex = new CreateIndex.Builder(INDEX).build();
 
-        JestResult result = client.execute(createIndex);
+        QueryResult result = client.execute(createIndex);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
     }
 
@@ -235,7 +235,7 @@ public class BulkIntegrationTest extends AbstractIntegrationTest {
                         .build())
                 .build();
 
-        JestResult result = client.execute(bulk);
+        QueryResult result = client.execute(bulk);
         assertFalse(result.getErrorMessage(), result.isSucceeded());
     }
 
@@ -497,7 +497,7 @@ public class BulkIntegrationTest extends AbstractIntegrationTest {
     @After
     public void deleteIndex() throws IOException {
         DeleteIndex indicesExists = new DeleteIndex.Builder(INDEX).build();
-        JestResult result = client.execute(indicesExists);
+        QueryResult result = client.execute(indicesExists);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
     }
 }

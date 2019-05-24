@@ -2,7 +2,7 @@ package com.jusdt.es.client.core.search.sort;
 
 import com.google.gson.*;
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.core.Search;
 import com.jusdt.es.common.core.search.sort.Sort;
 
@@ -63,7 +63,7 @@ public class SortIntegrationTest extends AbstractIntegrationTest {
                 .addIndex(index)
                 .addType(type)
                 .build();
-        JestResult result = client.execute(search);
+        QueryResult result = client.execute(search);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
         JsonObject object = (JsonObject) result.getJsonObject().get("hits");
         JsonArray hits = (JsonArray) object.get("hits");
@@ -81,7 +81,7 @@ public class SortIntegrationTest extends AbstractIntegrationTest {
                 .addIndex(index)
                 .addType(type)
                 .build();
-        JestResult result = client.execute(search);
+        QueryResult result = client.execute(search);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
         JsonObject object = (JsonObject) result.getJsonObject().get("hits");
         JsonArray hits = (JsonArray) object.get("hits");
@@ -104,7 +104,7 @@ public class SortIntegrationTest extends AbstractIntegrationTest {
                 .addIndex(anotherIndex)
                 .addType(type)
                 .build();
-        JestResult result = client.execute(search);
+        QueryResult result = client.execute(search);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
         JsonObject object = (JsonObject) result.getJsonObject().get("hits");
         JsonArray hits = (JsonArray) object.get("hits");

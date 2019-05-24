@@ -1,22 +1,21 @@
 package com.jusdt.es.common.action;
 
 import com.google.gson.Gson;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 
-/**
- * @author cihat keser
- */
-public abstract class GenericResultAbstractAction extends AbstractAction<JestResult> {
+public abstract class GenericResultAbstractAction extends AbstractAction<QueryResult> {
 
-    public GenericResultAbstractAction() {
-    }
+	public GenericResultAbstractAction() {
+	}
 
-    public GenericResultAbstractAction(Builder builder) {
-        super(builder);
-    }
+	public GenericResultAbstractAction(Builder<?, ?> builder) {
+		super(builder);
+	}
 
-    @Override
-    public JestResult createNewElasticSearchResult(String responseBody, int statusCode, String reasonPhrase, Gson gson) {
-        return createNewElasticSearchResult(new JestResult(gson), responseBody, statusCode, reasonPhrase, gson);
-    }
+	@Override
+	public QueryResult createNewElasticSearchResult(String responseBody, int statusCode, String reasonPhrase,
+			Gson gson) {
+		return createNewElasticSearchResult(new QueryResult(gson), responseBody, statusCode, reasonPhrase, gson);
+	}
+
 }

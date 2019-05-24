@@ -2,7 +2,7 @@ package com.jusdt.es.common.indices;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.indices.Analyze;
 
 import org.junit.Test;
@@ -24,7 +24,7 @@ public class AnalyzeTest {
                 .filter("lowercase")
                 .text("this is a test")
                 .build();
-        assertEquals("/_analyze", analyze.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("/_analyze", analyze.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test

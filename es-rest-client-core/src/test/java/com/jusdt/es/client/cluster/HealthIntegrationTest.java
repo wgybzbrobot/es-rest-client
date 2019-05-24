@@ -4,7 +4,7 @@ import org.elasticsearch.test.ESIntegTestCase;
 import org.junit.Test;
 
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.cluster.Health;
 
 import static org.elasticsearch.test.hamcrest.ElasticsearchAssertions.assertAcked;
@@ -19,7 +19,7 @@ public class HealthIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     public void health() throws Exception {
-        JestResult result = client.execute(new Health.Builder().build());
+        QueryResult result = client.execute(new Health.Builder().build());
         assertTrue(result.getErrorMessage(), result.isSucceeded());
         assertThat(
                 result.getJsonObject().get("status").getAsString(),
@@ -33,7 +33,7 @@ public class HealthIntegrationTest extends AbstractIntegrationTest {
         final Health request = new Health.Builder()
                 .addIndex("test1")
                 .build();
-        JestResult result = client.execute(request);
+        QueryResult result = client.execute(request);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
         assertThat(
                 result.getJsonObject().get("status").getAsString(),
@@ -46,7 +46,7 @@ public class HealthIntegrationTest extends AbstractIntegrationTest {
         final Health request = new Health.Builder()
                 .waitForStatus(Health.Status.GREEN)
                 .build();
-        JestResult result = client.execute(request);
+        QueryResult result = client.execute(request);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
         assertEquals("green", result.getJsonObject().get("status").getAsString());
     }
@@ -57,7 +57,7 @@ public class HealthIntegrationTest extends AbstractIntegrationTest {
                 .addIndex("test1")
                 .timeout(1)
                 .build();
-        JestResult result = client.execute(request);
+        QueryResult result = client.execute(request);
         assertFalse(result.getErrorMessage(), result.isSucceeded());
         assertEquals(408, result.getResponseCode());
     }
@@ -67,7 +67,7 @@ public class HealthIntegrationTest extends AbstractIntegrationTest {
         final Health request = new Health.Builder()
                 .local()
                 .build();
-        JestResult result = client.execute(request);
+        QueryResult result = client.execute(request);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
         assertThat(
                 result.getJsonObject().get("status").getAsString(),
@@ -80,7 +80,7 @@ public class HealthIntegrationTest extends AbstractIntegrationTest {
         final Health request = new Health.Builder()
                 .waitForNoRelocatingShards()
                 .build();
-        JestResult result = client.execute(request);
+        QueryResult result = client.execute(request);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
         assertThat(
                 result.getJsonObject().get("status").getAsString(),
@@ -93,7 +93,7 @@ public class HealthIntegrationTest extends AbstractIntegrationTest {
         final Health request = new Health.Builder()
                 .level(Health.Level.SHARDS)
                 .build();
-        JestResult result = client.execute(request);
+        QueryResult result = client.execute(request);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
         assertThat(
                 result.getJsonObject().get("status").getAsString(),

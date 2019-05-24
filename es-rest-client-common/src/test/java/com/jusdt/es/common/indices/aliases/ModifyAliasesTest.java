@@ -3,7 +3,7 @@ package com.jusdt.es.common.indices.aliases;
 import org.elasticsearch.common.collect.MapBuilder;
 import org.junit.Test;
 
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.indices.aliases.AddAliasMapping;
 import com.jusdt.es.common.indices.aliases.AliasMapping;
 import com.jusdt.es.common.indices.aliases.ModifyAliases;
@@ -32,7 +32,7 @@ public class ModifyAliasesTest {
         ModifyAliases modifyAliases = new ModifyAliases.Builder(addMapping).build();
 
         assertEquals("POST", modifyAliases.getRestMethodName());
-        assertEquals("/_aliases", modifyAliases.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("/_aliases", modifyAliases.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test

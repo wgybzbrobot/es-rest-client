@@ -21,8 +21,8 @@ import org.littleshoot.proxy.impl.DefaultHttpProxyServer;
 import com.jusdt.es.client.JestClientFactory;
 import com.jusdt.es.client.config.HttpClientConfig;
 import com.jusdt.es.client.http.JestHttpClient;
-import com.jusdt.es.common.client.JestResult;
-import com.jusdt.es.common.client.JestResultHandler;
+import com.jusdt.es.common.client.QueryResult;
+import com.jusdt.es.common.client.QueryResultHandler;
 import com.jusdt.es.common.indices.Stats;
 
 import java.io.IOException;
@@ -77,7 +77,7 @@ public class JestHttpClientConfiguredProxyIntegrationTest extends ESIntegTestCas
                 .Builder("http://localhost:" + cluster().httpAddresses()[0].getPort())
                 .build());
         try (JestHttpClient customJestClient = (JestHttpClient) factory.getObject()) {
-            JestResult result = customJestClient.execute(new Stats.Builder().build());
+            QueryResult result = customJestClient.execute(new Stats.Builder().build());
             assertTrue(result.getErrorMessage(), result.isSucceeded());
             assertEquals(0, numProxyRequests.intValue());
         }
@@ -88,7 +88,7 @@ public class JestHttpClientConfiguredProxyIntegrationTest extends ESIntegTestCas
                 .proxy(new HttpHost("localhost", PROXY_PORT))
                 .build());
         try (JestHttpClient customJestClient = (JestHttpClient) factory.getObject()) {
-            JestResult result = customJestClient.execute(new Stats.Builder().build());
+            QueryResult result = customJestClient.execute(new Stats.Builder().build());
             assertTrue(result.getErrorMessage(), result.isSucceeded());
             assertEquals(1, numProxyRequests.intValue());
         }
@@ -101,9 +101,9 @@ public class JestHttpClientConfiguredProxyIntegrationTest extends ESIntegTestCas
                 .build());
         try (JestHttpClient customJestClient = (JestHttpClient) factory.getObject()) {
             final CountDownLatch actionExecuted = new CountDownLatch(1);
-            customJestClient.executeAsync(new Stats.Builder().build(), new JestResultHandler<JestResult>() {
+            customJestClient.executeAsync(new Stats.Builder().build(), new QueryResultHandler<QueryResult>() {
                 @Override
-                public void completed(JestResult result) {
+                public void completed(QueryResult result) {
                     actionExecuted.countDown();
                 }
 

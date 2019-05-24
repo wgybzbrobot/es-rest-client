@@ -1,7 +1,7 @@
 package com.jusdt.es.common.snapshot;
 
 import com.google.gson.Gson;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.snapshot.RestoreSnapshot;
 
 import org.json.JSONException;
@@ -35,7 +35,7 @@ public class RestoreSnapshotTest {
         RestoreSnapshot restoreSnapshot = new RestoreSnapshot.Builder(repository, snapshot)
                 .settings(repositorySettings).build();
         assertEquals("POST", restoreSnapshot.getRestMethodName());
-        assertEquals("/_snapshot/leeseohoo/leeseola/_restore", restoreSnapshot.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("/_snapshot/leeseohoo/leeseola/_restore", restoreSnapshot.getURI(ElasticSearchVersion.UNKNOWN));
         String settings = restoreSnapshot.getData(new Gson());
 
         String expectedJSON = "{\n" +

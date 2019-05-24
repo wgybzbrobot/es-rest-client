@@ -2,7 +2,7 @@ package com.jusdt.es.common.indices.aliases;
 
 import com.google.common.collect.ImmutableMap;
 import com.jusdt.es.common.action.GenericResultAbstractAction;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -26,7 +26,7 @@ public class ModifyAliases extends GenericResultAbstractAction {
     }
 
     @Override
-    protected String buildURI(ElasticsearchVersion elasticsearchVersion) {
+    protected String buildURI(ElasticSearchVersion elasticsearchVersion) {
         return super.buildURI(elasticsearchVersion) + "/_aliases";
     }
 

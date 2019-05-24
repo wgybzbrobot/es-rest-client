@@ -1,7 +1,7 @@
 package com.jusdt.es.common.cluster;
 
 import com.jusdt.es.common.action.GenericResultAbstractAction;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 
 /**
  * Currently only supports retrieving information for a particular task
@@ -16,7 +16,7 @@ public class TasksInformation extends GenericResultAbstractAction {
     }
 
     @Override
-    protected String buildURI(ElasticsearchVersion elasticsearchVersion) {
+    protected String buildURI(ElasticSearchVersion elasticsearchVersion) {
         String uri = super.buildURI(elasticsearchVersion) + "_tasks";
         if (task != null) {
             uri += "/" + task;
@@ -28,7 +28,7 @@ public class TasksInformation extends GenericResultAbstractAction {
     public String getRestMethodName() {
         return "GET";
     }
-
+    
     public static class Builder extends GenericResultAbstractAction.Builder<TasksInformation, Builder> {
 
         protected String task;
@@ -42,6 +42,7 @@ public class TasksInformation extends GenericResultAbstractAction {
         public TasksInformation build() {
             return new TasksInformation(this);
         }
+        
     }
 
 }

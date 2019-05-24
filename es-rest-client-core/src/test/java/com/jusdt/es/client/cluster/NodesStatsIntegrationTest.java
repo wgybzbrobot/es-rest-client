@@ -4,7 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.cluster.NodesStats;
 
 import org.elasticsearch.test.ESIntegTestCase;
@@ -31,7 +31,7 @@ public class NodesStatsIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     public void nodesStatsAll() throws IOException {
-        JestResult result = client.execute(new NodesStats.Builder()
+        QueryResult result = client.execute(new NodesStats.Builder()
                 .build());
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
@@ -64,7 +64,7 @@ public class NodesStatsIntegrationTest extends AbstractIntegrationTest {
     public void nodesStats() throws IOException {
         String dataNode = internalCluster().startDataOnlyNode();
 
-        JestResult result = client.execute(new NodesStats.Builder()
+        QueryResult result = client.execute(new NodesStats.Builder()
                 .addNode(dataNode)
                 .build());
         assertTrue(result.getErrorMessage(), result.isSucceeded());
@@ -97,7 +97,7 @@ public class NodesStatsIntegrationTest extends AbstractIntegrationTest {
     public void nodesStatsWithIndices() throws IOException {
         String dataNode = internalCluster().startDataOnlyNode();
 
-        JestResult result = client.execute(new NodesStats.Builder()
+        QueryResult result = client.execute(new NodesStats.Builder()
                 .addNode(dataNode)
                 .withIndices()
                 .build());
@@ -134,7 +134,7 @@ public class NodesStatsIntegrationTest extends AbstractIntegrationTest {
     public void nodesStatsWithIndicesAndJvm() throws IOException {
         String dataNode = internalCluster().startDataOnlyNode();
 
-        JestResult result = client.execute(new NodesStats.Builder()
+        QueryResult result = client.execute(new NodesStats.Builder()
                 .addNode(dataNode)
                 .withIndices()
                 .withJvm()

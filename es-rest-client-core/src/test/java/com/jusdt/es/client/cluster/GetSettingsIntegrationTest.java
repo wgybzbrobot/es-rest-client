@@ -5,7 +5,7 @@ import org.elasticsearch.test.ESIntegTestCase;
 import org.junit.Test;
 
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.cluster.GetSettings;
 
 import java.io.IOException;
@@ -20,7 +20,7 @@ public class GetSettingsIntegrationTest extends AbstractIntegrationTest {
     @Test
     public void nullSourceShouldFailOnServer() throws IOException {
         GetSettings getSettings = new GetSettings.Builder().build();
-        JestResult result = client.execute(getSettings);
+        QueryResult result = client.execute(getSettings);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         Map settings  = result.getSourceAsObject(Map.class);

@@ -5,7 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.core.Index;
 import com.jusdt.es.common.core.Search;
 import com.jusdt.es.common.core.SearchResult;
@@ -54,7 +54,7 @@ public class SearchIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     public void searchWithValidQuery() throws IOException {
-        JestResult result = client.execute(new Search.Builder(query).build());
+        QueryResult result = client.execute(new Search.Builder(query).build());
         assertTrue(result.getErrorMessage(), result.isSucceeded());
     }
 
@@ -209,7 +209,7 @@ public class SearchIntegrationTest extends AbstractIntegrationTest {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.matchQuery("user", "kimchy"));
 
-        JestResult result = client.execute(new Search.Builder(searchSourceBuilder.toString()).build());
+        QueryResult result = client.execute(new Search.Builder(searchSourceBuilder.toString()).build());
         assertTrue(result.getErrorMessage(), result.isSucceeded());
     }
 
@@ -254,7 +254,7 @@ public class SearchIntegrationTest extends AbstractIntegrationTest {
                 .addIndex("articles")
                 .addType("article")
                 .build();
-        JestResult result = client.execute(search);
+        QueryResult result = client.execute(search);
         List<TestArticleModel> articleResult = result.getSourceAsObjectList(TestArticleModel.class);
         assertNotNull(articleResult.get(0).getId());
     }

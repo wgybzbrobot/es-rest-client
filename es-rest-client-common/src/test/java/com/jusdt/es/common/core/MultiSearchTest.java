@@ -2,7 +2,7 @@ package com.jusdt.es.common.core;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.core.MultiSearch;
 import com.jusdt.es.common.core.MultiSearchResult;
 import com.jusdt.es.common.core.Search;
@@ -29,7 +29,7 @@ public class MultiSearchTest {
         MultiSearch multiSearch = new MultiSearch.Builder(search).build();
 
         assertEquals("POST", multiSearch.getRestMethodName());
-        assertEquals("/_msearch", multiSearch.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("/_msearch", multiSearch.getURI(ElasticSearchVersion.UNKNOWN));
         assertEquals("application/x-ndjson", multiSearch.getHeader("Content-Type"));
     }
 
@@ -42,7 +42,7 @@ public class MultiSearchTest {
         MultiSearch multiSearch = new MultiSearch.Builder(search).build();
 
         assertEquals("POST", multiSearch.getRestMethodName());
-        assertEquals("/_msearch", multiSearch.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("/_msearch", multiSearch.getURI(ElasticSearchVersion.UNKNOWN));
         JSONAssert.assertEquals(expectedData, multiSearch.getData(null).toString(), false);
     }
 
@@ -57,7 +57,7 @@ public class MultiSearchTest {
         MultiSearch multiSearch = new MultiSearch.Builder(search).build();
 
         assertEquals("POST", multiSearch.getRestMethodName());
-        assertEquals("/_msearch", multiSearch.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("/_msearch", multiSearch.getURI(ElasticSearchVersion.UNKNOWN));
         JSONAssert.assertEquals(expectedData, multiSearch.getData(null).toString(), false);
     }
 
@@ -75,7 +75,7 @@ public class MultiSearchTest {
         MultiSearch multiSearch = new MultiSearch.Builder(search).addSearch(search2).build();
 
         assertEquals("POST", multiSearch.getRestMethodName());
-        assertEquals("/_msearch", multiSearch.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("/_msearch", multiSearch.getURI(ElasticSearchVersion.UNKNOWN));
         JSONAssert.assertEquals(expectedData, multiSearch.getData(null).toString(), false);
     }
 
@@ -102,7 +102,7 @@ public class MultiSearchTest {
         MultiSearch multiSearch = new MultiSearch.Builder(search).addSearch(search2).build();
 
         assertEquals("POST", multiSearch.getRestMethodName());
-        assertEquals("/_msearch", multiSearch.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("/_msearch", multiSearch.getURI(ElasticSearchVersion.UNKNOWN));
         JSONAssert.assertEquals(expectedData, multiSearch.getData(null), false);
     }
 

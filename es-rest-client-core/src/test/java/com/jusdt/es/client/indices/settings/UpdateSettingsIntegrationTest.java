@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.indices.settings.UpdateSettings;
 
 import java.io.IOException;
@@ -38,7 +38,7 @@ public class UpdateSettingsIntegrationTest extends AbstractIntegrationTest {
                 "} }";
 
         UpdateSettings updateSettings = new UpdateSettings.Builder(body).build();
-        JestResult result = client.execute(updateSettings);
+        QueryResult result = client.execute(updateSettings);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         getSettingsResponse = client().admin().indices().getSettings(new GetSettingsRequest()).actionGet();
@@ -56,7 +56,7 @@ public class UpdateSettingsIntegrationTest extends AbstractIntegrationTest {
                 "} }";
 
         UpdateSettings updateSettings = new UpdateSettings.Builder(body).addIndex("idontexist").build();
-        JestResult result = client.execute(updateSettings);
+        QueryResult result = client.execute(updateSettings);
         assertFalse(result.isSucceeded());
     }
 
@@ -73,7 +73,7 @@ public class UpdateSettingsIntegrationTest extends AbstractIntegrationTest {
                 "} }";
 
         UpdateSettings updateSettings = new UpdateSettings.Builder(body).addIndex(INDEX_1).build();
-        JestResult result = client.execute(updateSettings);
+        QueryResult result = client.execute(updateSettings);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         getSettingsResponse = client().admin().indices().getSettings(new GetSettingsRequest()).actionGet();
@@ -87,21 +87,21 @@ public class UpdateSettingsIntegrationTest extends AbstractIntegrationTest {
     @Test
     public void testWithEmptySource() throws IOException {
         UpdateSettings updateSettings = new UpdateSettings.Builder("").addIndex(INDEX_1).build();
-        JestResult result = client.execute(updateSettings);
+        QueryResult result = client.execute(updateSettings);
         assertFalse(result.isSucceeded());
     }
 
     @Test
     public void testWithEmptyJsonSource() throws IOException {
         UpdateSettings updateSettings = new UpdateSettings.Builder("{}").addIndex(INDEX_1).build();
-        JestResult result = client.execute(updateSettings);
+        QueryResult result = client.execute(updateSettings);
         assertFalse(result.isSucceeded());
     }
 
     @Test
     public void testWithNullSource() throws IOException {
         UpdateSettings updateSettings = new UpdateSettings.Builder(null).addIndex(INDEX_1).build();
-        JestResult result = client.execute(updateSettings);
+        QueryResult result = client.execute(updateSettings);
         assertFalse(result.isSucceeded());
     }
 

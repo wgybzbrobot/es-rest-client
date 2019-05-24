@@ -2,11 +2,6 @@ package com.jusdt.es.common.core;
 
 import com.jusdt.es.common.action.SingleResultAbstractDocumentTargetedAction;
 
-
-/**
- * @author Dogukan Sonmez
- * @author cihat keser
- */
 public class Get extends SingleResultAbstractDocumentTargetedAction {
 
     protected Get(Builder builder) {
@@ -40,5 +35,7 @@ public class Get extends SingleResultAbstractDocumentTargetedAction {
         public Get build() {
             return new Get(this);
         }
+        
     }
+    
 }

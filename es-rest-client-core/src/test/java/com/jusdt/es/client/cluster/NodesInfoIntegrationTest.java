@@ -4,7 +4,7 @@ import org.elasticsearch.test.ESIntegTestCase;
 import org.junit.Test;
 
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.cluster.NodesInfo;
 
 import java.io.IOException;
@@ -17,35 +17,35 @@ public class NodesInfoIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     public void nodesInfoWithoutNodeAndInfo() throws IOException {
-        JestResult result = client.execute(new NodesInfo.Builder().build());
+        QueryResult result = client.execute(new NodesInfo.Builder().build());
         assertTrue(result.getErrorMessage(), result.isSucceeded());
     }
 
     @Test
     public void nodesInfoWithNodeWithoutInfo() throws IOException {
         NodesInfo nodesInfo = new NodesInfo.Builder().addNode("node1").build();
-        JestResult result = client.execute(nodesInfo);
+        QueryResult result = client.execute(nodesInfo);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
     }
 
     @Test
     public void nodesInfoWithoutNodeWithInfo() throws IOException {
         NodesInfo nodesInfo = new NodesInfo.Builder().withOs().build();
-        JestResult result = client.execute(nodesInfo);
+        QueryResult result = client.execute(nodesInfo);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
     }
 
     @Test
     public void nodesInfoWithNodeAndWithInfo() throws IOException {
         NodesInfo nodesInfo = new NodesInfo.Builder().addNode("node1").withOs().build();
-        JestResult result = client.execute(nodesInfo);
+        QueryResult result = client.execute(nodesInfo);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
     }
 
     @Test
     public void nodesInfoWithMultipleNodeAndWithoutInfo() throws IOException {
         NodesInfo nodesInfo = new NodesInfo.Builder().addNode("node1").addNode("node2").build();
-        JestResult result = client.execute(nodesInfo);
+        QueryResult result = client.execute(nodesInfo);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
     }
 
@@ -57,7 +57,7 @@ public class NodesInfoIntegrationTest extends AbstractIntegrationTest {
                 .withProcess()
                 .withOs()
                 .build();
-        JestResult result = client.execute(nodesInfo);
+        QueryResult result = client.execute(nodesInfo);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
     }
 }

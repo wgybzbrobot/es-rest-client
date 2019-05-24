@@ -5,11 +5,11 @@ import com.jusdt.es.client.android.http.HttpDeleteWithEntity;
 import com.jusdt.es.client.android.http.HttpGetWithEntity;
 import com.jusdt.es.common.action.Action;
 import com.jusdt.es.common.client.AbstractJestClient;
-import com.jusdt.es.common.client.JestClient;
-import com.jusdt.es.common.client.JestResult;
-import com.jusdt.es.common.client.JestResultHandler;
+import com.jusdt.es.common.client.ESClient;
+import com.jusdt.es.common.client.QueryResult;
+import com.jusdt.es.common.client.QueryResultHandler;
 import com.jusdt.es.common.client.config.CouldNotConnectException;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 
 import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpResponse;
@@ -34,7 +34,7 @@ import java.util.Map;
 /**
  * @author cihat.keser
  */
-public class JestDroidClient extends AbstractJestClient implements JestClient {
+public class JestDroidClient extends AbstractJestClient implements ESClient {
 
     private final static Logger log = LoggerFactory.getLogger(JestDroidClient.class);
 
@@ -43,12 +43,12 @@ public class JestDroidClient extends AbstractJestClient implements JestClient {
     private HttpClient httpClient;
 
     @Override
-    public <T extends JestResult> T execute(Action<T> clientRequest) throws IOException {
+    public <T extends QueryResult> T execute(Action<T> clientRequest) throws IOException {
         return execute(clientRequest, null);
     }
 
-    public <T extends JestResult> T execute(Action<T> clientRequest, RequestConfig requestConfig) throws IOException {
-        String elasticSearchRestUrl = getRequestURL(getNextServer(), clientRequest.getURI(ElasticsearchVersion.UNKNOWN));
+    public <T extends QueryResult> T execute(Action<T> clientRequest, RequestConfig requestConfig) throws IOException {
+        String elasticSearchRestUrl = getRequestURL(getNextServer(), clientRequest.getURI(ElasticSearchVersion.UNKNOWN));
         HttpUriRequest request = constructHttpMethod(clientRequest.getRestMethodName(), elasticSearchRestUrl, clientRequest.getData(gson), requestConfig);
 
         // add headers added to action
@@ -67,7 +67,7 @@ public class JestDroidClient extends AbstractJestClient implements JestClient {
     }
 
     @Override
-    public <T extends JestResult> void executeAsync(final Action<T> clientRequest, final JestResultHandler<? super T> resultHandler) {
+    public <T extends QueryResult> void executeAsync(final Action<T> clientRequest, final QueryResultHandler<? super T> resultHandler) {
         throw new UnsupportedOperationException("Jest-droid does not yet support async execution, sorry!");
     }
 
@@ -110,7 +110,7 @@ public class JestDroidClient extends AbstractJestClient implements JestClient {
         return httpUriRequest;
     }
 
-    private <T extends JestResult> T deserializeResponse(HttpResponse response, Action<T> clientRequest) throws IOException {
+    private <T extends QueryResult> T deserializeResponse(HttpResponse response, Action<T> clientRequest) throws IOException {
         StatusLine statusLine = response.getStatusLine();
         return clientRequest.createNewElasticSearchResult(
                 response.getEntity() != null ? EntityUtilsHC4.toString(response.getEntity()) : null,

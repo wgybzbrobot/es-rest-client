@@ -37,7 +37,7 @@ import com.google.gson.Gson;
 import com.jusdt.es.client.config.HttpClientConfig;
 import com.jusdt.es.client.config.HttpReapableConnectionManager;
 import com.jusdt.es.client.http.JestHttpClient;
-import com.jusdt.es.common.client.JestClient;
+import com.jusdt.es.common.client.ESClient;
 import com.jusdt.es.common.client.config.IdleConnectionReaper;
 import com.jusdt.es.common.client.config.NodeChecker;
 
@@ -47,7 +47,7 @@ public class JestClientFactory {
 
 	private HttpClientConfig httpClientConfig;
 
-	public JestClient getObject() {
+	public ESClient getObject() {
 		JestHttpClient client = new JestHttpClient();
 
 		if (httpClientConfig == null) {

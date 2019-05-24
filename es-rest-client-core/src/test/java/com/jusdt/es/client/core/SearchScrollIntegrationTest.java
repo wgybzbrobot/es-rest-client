@@ -2,7 +2,7 @@ package com.jusdt.es.client.core;
 
 import com.google.gson.JsonArray;
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.core.ClearScroll;
 import com.jusdt.es.common.core.Search;
 import com.jusdt.es.common.core.SearchScroll;
@@ -50,7 +50,7 @@ public class SearchScrollIntegrationTest extends AbstractIntegrationTest {
                 .addSort(new Sort("code"))
                 .setParameter(Parameters.SCROLL, "5m")
                 .build();
-        JestResult result = client.execute(search);
+        QueryResult result = client.execute(search);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
         JsonArray hits = result.getJsonObject().getAsJsonObject("hits").getAsJsonArray("hits");
         assertEquals(
@@ -107,7 +107,7 @@ public class SearchScrollIntegrationTest extends AbstractIntegrationTest {
             .addSort(new Sort("code"))
             .setParameter(Parameters.SCROLL, "5m")
             .build();
-        JestResult result = client.execute(search);
+        QueryResult result = client.execute(search);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
         JsonArray hits = result.getJsonObject().getAsJsonObject("hits").getAsJsonArray("hits");
         assertEquals(

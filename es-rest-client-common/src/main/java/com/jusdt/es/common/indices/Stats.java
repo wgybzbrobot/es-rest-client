@@ -3,7 +3,7 @@ package com.jusdt.es.common.indices;
 import com.google.common.base.Joiner;
 import com.jusdt.es.common.action.AbstractMultiIndexActionBuilder;
 import com.jusdt.es.common.action.GenericResultAbstractAction;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 
 /**
  * @author Dogukan Sonmez
@@ -22,7 +22,7 @@ public class Stats extends GenericResultAbstractAction {
     }
 
     @Override
-    protected String buildURI(ElasticsearchVersion elasticsearchVersion) {
+    protected String buildURI(ElasticSearchVersion elasticsearchVersion) {
         return super.buildURI(elasticsearchVersion) + "/_stats";
     }
 

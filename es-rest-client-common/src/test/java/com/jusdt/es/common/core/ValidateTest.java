@@ -2,7 +2,7 @@ package com.jusdt.es.common.core;
 
 import org.junit.Test;
 
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.core.Validate;
 
 import static org.junit.Assert.assertEquals;
@@ -21,7 +21,7 @@ public class ValidateTest {
 
         assertEquals("POST", validate.getRestMethodName());
         assertEquals("{query:query}", validate.getData(null));
-        assertEquals("/_validate/query", validate.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("/_validate/query", validate.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
@@ -30,7 +30,7 @@ public class ValidateTest {
 
         assertEquals("POST", validate.getRestMethodName());
         assertEquals("{query:query}", validate.getData(null));
-        assertEquals("twitter/_validate/query", validate.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("twitter/_validate/query", validate.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
@@ -39,7 +39,7 @@ public class ValidateTest {
 
         assertEquals("POST", validate.getRestMethodName());
         assertEquals("{query:query}", validate.getData(null));
-        assertEquals("twitter/tweet/_validate/query", validate.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("twitter/tweet/_validate/query", validate.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test

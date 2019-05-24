@@ -9,7 +9,7 @@ import org.elasticsearch.test.ESIntegTestCase;
 import org.junit.Test;
 
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.indices.aliases.AddAliasMapping;
 import com.jusdt.es.common.indices.aliases.ModifyAliases;
 import com.jusdt.es.common.indices.aliases.RemoveAliasMapping;
@@ -32,7 +32,7 @@ public class ModifyAliasesIntegrationTest extends AbstractIntegrationTest {
         ModifyAliases modifyAliases = new ModifyAliases.Builder(
                 new AddAliasMapping.Builder((index0), alias).build()
         ).build();
-        JestResult result = client.execute(modifyAliases);
+        QueryResult result = client.execute(modifyAliases);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         ClusterState clusterState =
@@ -53,7 +53,7 @@ public class ModifyAliasesIntegrationTest extends AbstractIntegrationTest {
         ModifyAliases modifyAliases = new ModifyAliases.Builder(
                 new AddAliasMapping.Builder(index2, alias).addIndex(index3).build()
         ).build();
-        JestResult result = client.execute(modifyAliases);
+        QueryResult result = client.execute(modifyAliases);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         ClusterState clusterState =
@@ -72,7 +72,7 @@ public class ModifyAliasesIntegrationTest extends AbstractIntegrationTest {
         ModifyAliases modifyAliases = new ModifyAliases.Builder(
                 new AddAliasMapping.Builder("my_index_4", alias).addSearchRouting(routing).build()
         ).build();
-        JestResult result = client.execute(modifyAliases);
+        QueryResult result = client.execute(modifyAliases);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         ClusterState clusterState =
@@ -104,7 +104,7 @@ public class ModifyAliasesIntegrationTest extends AbstractIntegrationTest {
         ModifyAliases modifyAliases = new ModifyAliases.Builder(
                 new RemoveAliasMapping.Builder("my_index_6", alias).build()
         ).build();
-        JestResult result = client.execute(modifyAliases);
+        QueryResult result = client.execute(modifyAliases);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         ClusterState clusterState =
@@ -131,7 +131,7 @@ public class ModifyAliasesIntegrationTest extends AbstractIntegrationTest {
         ).addAlias(
                 new AddAliasMapping.Builder("my_index_9", alias).build()
         ).build();
-        JestResult result = client.execute(modifyAliases);
+        QueryResult result = client.execute(modifyAliases);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         ClusterState clusterState =

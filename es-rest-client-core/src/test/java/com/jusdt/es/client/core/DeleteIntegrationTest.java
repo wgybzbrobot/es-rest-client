@@ -6,8 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
-import com.jusdt.es.common.client.JestResultHandler;
+import com.jusdt.es.common.client.QueryResult;
+import com.jusdt.es.common.client.QueryResultHandler;
 import com.jusdt.es.common.core.Delete;
 import com.jusdt.es.common.core.DocumentResult;
 import com.jusdt.es.common.core.Index;
@@ -31,7 +31,7 @@ public class DeleteIntegrationTest extends AbstractIntegrationTest {
     public void createIndex() throws IOException {
         CreateIndex createIndex = new CreateIndex.Builder(INDEX).build();
 
-        JestResult result = client.execute(createIndex);
+        QueryResult result = client.execute(createIndex);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
     }
 
@@ -53,7 +53,7 @@ public class DeleteIntegrationTest extends AbstractIntegrationTest {
         client.executeAsync(new Delete.Builder(ID)
                 .index(INDEX)
                 .type(TYPE)
-                .build(), new JestResultHandler<DocumentResult>() {
+                .build(), new QueryResultHandler<DocumentResult>() {
             @Override
             public void completed(DocumentResult result) {
                 assertFalse(result.isSucceeded());
@@ -86,7 +86,7 @@ public class DeleteIntegrationTest extends AbstractIntegrationTest {
     @After
     public void deleteIndex() throws IOException {
         DeleteIndex indicesExists = new DeleteIndex.Builder(INDEX).build();
-        JestResult result = client.execute(indicesExists);
+        QueryResult result = client.execute(indicesExists);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
     }
 

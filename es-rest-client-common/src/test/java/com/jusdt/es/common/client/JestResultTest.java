@@ -16,15 +16,15 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.jusdt.es.common.annotations.JestId;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.annotations.ESClientId;
+import com.jusdt.es.common.client.QueryResult;
 
 /**
  * @author Dogukan Sonmez
  */
 public class JestResultTest {
 
-    JestResult result = new JestResult(new Gson());
+    QueryResult result = new QueryResult(new Gson());
 
     @Test
     public void extractGetResource() {
@@ -44,7 +44,7 @@ public class JestResultTest {
         expectedResultMap.put("user", "kimchy");
         expectedResultMap.put("postDate", "2009-11-15T14:12:12");
         expectedResultMap.put("message", "trying out Elastic Search");
-        expectedResultMap.put(JestResult.ES_METADATA_ID, "1");
+        expectedResultMap.put(QueryResult.ES_METADATA_ID, "1");
         JsonObject actualResultMap = result.extractSource().get(0).getAsJsonObject();
         assertEquals(expectedResultMap.size(), actualResultMap.entrySet().size());
         for (String key : expectedResultMap.keySet()) {
@@ -177,8 +177,8 @@ public class JestResultTest {
         assertEquals("kimchy", twitter.get("user"));
         assertEquals("trying out Elastic Search", twitter.get("message"));
         assertEquals("2009-11-15T14:12:12", twitter.get("postDate"));
-        assertNull(twitter.get(JestResult.ES_METADATA_ID));
-        assertNull(twitter.get(JestResult.ES_METADATA_VERSION));
+        assertNull(twitter.get(QueryResult.ES_METADATA_ID));
+        assertNull(twitter.get(QueryResult.ES_METADATA_VERSION));
     }
 
     @Test
@@ -530,8 +530,8 @@ public class JestResultTest {
         assertEquals("kimchy", twitterList.get(0).get("user"));
         assertEquals("trying out Elastic Search", twitterList.get(0).get("message"));
         assertEquals("2009-11-15T14:12:12", twitterList.get(0).get("postDate"));
-        assertNull(twitterList.get(0).get(JestResult.ES_METADATA_ID));
-        assertNull(twitterList.get(0).get(JestResult.ES_METADATA_VERSION));
+        assertNull(twitterList.get(0).get(QueryResult.ES_METADATA_ID));
+        assertNull(twitterList.get(0).get(QueryResult.ES_METADATA_VERSION));
     }
 
 
@@ -642,7 +642,7 @@ public class JestResultTest {
 
     abstract class Base {
 
-        @JestId
+        @ESClientId
         Long someIdName;
 
         public Long getSomeIdName() {
@@ -668,7 +668,7 @@ public class JestResultTest {
 
     class SimpleComment {
 
-        @JestId
+        @ESClientId
         Long someIdName;
 
         String message;

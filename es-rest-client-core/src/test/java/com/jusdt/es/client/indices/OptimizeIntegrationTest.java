@@ -7,7 +7,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.indices.Optimize;
 
 import java.io.IOException;
@@ -28,7 +28,7 @@ public class OptimizeIntegrationTest extends AbstractIntegrationTest {
     @Test
     public void testOptimizeDefault() throws InterruptedException, ExecutionException, TimeoutException, IOException {
         Optimize optimize = new Optimize.Builder().maxNumSegments(1).build();
-        JestResult result = client.execute(optimize);
+        QueryResult result = client.execute(optimize);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         IndicesStatsResponse statsResponse = client().admin().indices().stats(

@@ -2,7 +2,7 @@ package com.jusdt.es.common.indices.reindex;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.GsonBuilder;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.indices.reindex.Reindex;
 
 import org.junit.Test;
@@ -21,7 +21,7 @@ public class ReindexTest {
     	Reindex reindex = new Reindex.Builder(source,dest).build();
 
         assertEquals("POST", reindex.getRestMethodName());
-        assertEquals("/_reindex", reindex.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("/_reindex", reindex.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
 	@Test
@@ -34,7 +34,7 @@ public class ReindexTest {
 		                             .requestsPerSecond(5d)
 		                             .build();
 
-        String generatedURI = reindex.getURI(ElasticsearchVersion.UNKNOWN);
+        String generatedURI = reindex.getURI(ElasticSearchVersion.UNKNOWN);
 		
 		String expectedURI = "/_reindex?wait_for_completion=true&wait_for_active_shards=1&timeout=5000&requests_per_second=5.0";
 		assertEquals(expectedURI, generatedURI);

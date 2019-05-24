@@ -2,7 +2,7 @@ package com.jusdt.es.common.indices;
 
 import org.junit.Test;
 
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.indices.ForceMerge;
 
 import static org.junit.Assert.assertEquals;
@@ -15,7 +15,7 @@ public class ForceMergeTest {
     	ForceMerge forceMerge = new ForceMerge.Builder().addIndex("twitter").build();
 
         assertEquals("POST", forceMerge.getRestMethodName());
-        assertEquals("twitter/_forcemerge", forceMerge.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("twitter/_forcemerge", forceMerge.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test

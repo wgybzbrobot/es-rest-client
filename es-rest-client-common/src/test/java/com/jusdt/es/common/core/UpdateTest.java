@@ -2,7 +2,7 @@ package com.jusdt.es.common.core;
 
 import org.junit.Test;
 
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.core.Update;
 
 import static org.junit.Assert.assertEquals;
@@ -17,7 +17,7 @@ public class UpdateTest {
     public void updateDocumentWithoutDoc(){
         Update update = new Update.Builder(new Object()).index("twitter").type("tweet").id("1").build();
         assertEquals("POST", update.getRestMethodName());
-        assertEquals("twitter/tweet/1/_update", update.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("twitter/tweet/1/_update", update.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test

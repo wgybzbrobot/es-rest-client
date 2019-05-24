@@ -2,13 +2,9 @@ package com.jusdt.es.common.core;
 
 import com.jusdt.es.common.action.BulkableAction;
 import com.jusdt.es.common.action.SingleResultAbstractDocumentTargetedAction;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.params.Parameters;
 
-/**
- * @author Dogukan Sonmez
- * @author cihat keser
- */
 public class Update extends SingleResultAbstractDocumentTargetedAction implements BulkableAction<DocumentResult> {
 
     protected Update(Builder builder) {
@@ -22,7 +18,7 @@ public class Update extends SingleResultAbstractDocumentTargetedAction implement
     }
 
     @Override
-    protected String buildURI(ElasticsearchVersion elasticsearchVersion) {
+    protected String buildURI(ElasticSearchVersion elasticsearchVersion) {
         return super.buildURI(elasticsearchVersion) + "/_update";
     }
 
@@ -37,6 +33,7 @@ public class Update extends SingleResultAbstractDocumentTargetedAction implement
     }
 
     public static class Builder extends SingleResultAbstractDocumentTargetedAction.Builder<Update, Builder> {
+    	
         private final Object payload;
 
         public Builder(Object payload) {
@@ -46,12 +43,16 @@ public class Update extends SingleResultAbstractDocumentTargetedAction implement
         public Update build() {
             return new Update(this);
         }
+        
     }
 
     public static class VersionBuilder extends Builder {
+    	
         public VersionBuilder(Object payload, Long version) {
             super(payload);
             this.setParameter(Parameters.VERSION, version);
         }
+        
     }
+    
 }

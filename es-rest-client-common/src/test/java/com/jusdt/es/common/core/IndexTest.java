@@ -2,7 +2,7 @@ package com.jusdt.es.common.core;
 
 import org.junit.Test;
 
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.core.Index;
 import com.jusdt.es.common.params.Parameters;
 
@@ -20,7 +20,7 @@ public class IndexTest {
     public void indexDocument() {
         Index index = new Index.Builder(new Object()).index("twitter").type("tweet").id("1").build();
         assertEquals("PUT", index.getRestMethodName());
-        assertEquals("twitter/tweet/1", index.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("twitter/tweet/1", index.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
@@ -32,14 +32,14 @@ public class IndexTest {
                 .setParameter(Parameters.VERSION, 3)
                 .build();
         assertEquals("PUT", index.getRestMethodName());
-        assertEquals("twitter/tweet/1?version=3", index.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("twitter/tweet/1?version=3", index.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
     public void indexDocumentWithoutId() {
         Index index = new Index.Builder(new Object()).index("twitter").type("tweet").build();
         assertEquals("POST", index.getRestMethodName());
-        assertEquals("twitter/tweet", index.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("twitter/tweet", index.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test

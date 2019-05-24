@@ -2,7 +2,7 @@ package com.jusdt.es.common.indices.type;
 
 import org.junit.Test;
 
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.indices.type.TypeExist;
 
 import static org.junit.Assert.assertEquals;
@@ -18,7 +18,7 @@ public class TypeExistTest {
 		TypeExist typeExist = new TypeExist.Builder("happyprg").addType("seohoo").build();
 
 		assertEquals("HEAD", typeExist.getRestMethodName());
-		assertEquals("happyprg/_mapping/seohoo", typeExist.getURI(ElasticsearchVersion.V55));
+		assertEquals("happyprg/_mapping/seohoo", typeExist.getURI(ElasticSearchVersion.V55));
 	}
 
     @Test

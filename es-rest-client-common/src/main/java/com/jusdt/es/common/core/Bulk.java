@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 import com.jusdt.es.common.action.AbstractAction;
 import com.jusdt.es.common.action.BulkableAction;
 import com.jusdt.es.common.action.GenericResultAbstractAction;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.params.Parameters;
 import com.jusdt.es.common.strings.StringUtils;
 
@@ -115,7 +115,7 @@ public class Bulk extends AbstractAction<BulkResult> {
     }
 
     @Override
-    protected String buildURI(ElasticsearchVersion elasticsearchVersion) {
+    protected String buildURI(ElasticSearchVersion elasticsearchVersion) {
         return super.buildURI(elasticsearchVersion) + "/_bulk";
     }
 

@@ -7,7 +7,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.jusdt.es.common.action.AbstractAction;
 import com.jusdt.es.common.action.Action;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.core.Search;
 import com.jusdt.es.common.core.search.sort.Sort;
 import com.jusdt.es.common.core.search.sort.Sort.Sorting;
@@ -40,37 +40,37 @@ public class SearchTest {
     @Test
     public void getURIWithoutIndexAndType() {
         Search search = new Search.Builder("").build();
-        assertEquals("_all/_search", search.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("_all/_search", search.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
     public void getURIWithOnlyOneIndex() {
         Search search = new Search.Builder("").addIndex("twitter").build();
-        assertEquals("twitter/_search", search.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("twitter/_search", search.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
     public void getURIWithOneIndexAndOneType() {
         Search search = new Search.Builder("").addIndex("twitter").addType("tweet").build();
-        assertEquals("twitter/tweet/_search", search.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("twitter/tweet/_search", search.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
     public void getURIWithOnlyOneType() {
         Search search = new Search.Builder("").addType("tweet").build();
-        assertEquals("_all/tweet/_search", search.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("_all/tweet/_search", search.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
     public void getURIWithOnlyMultipleIndex() {
         Search search = new Search.Builder("").addIndex("twitter").addIndex("searchbox").build();
-        assertEquals("twitter%2Csearchbox/_search", search.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("twitter%2Csearchbox/_search", search.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
     public void getURIWithOnlyMultipleType() {
         Search search = new Search.Builder("").addType("tweet").addType("jest").build();
-        assertEquals("_all/tweet%2Cjest/_search", search.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("_all/tweet%2Cjest/_search", search.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
@@ -81,25 +81,25 @@ public class SearchTest {
                 .addType("tweet")
                 .addType("jest")
                 .build();
-        assertEquals("twitter%2Csearchbox/tweet%2Cjest/_search", search.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("twitter%2Csearchbox/tweet%2Cjest/_search", search.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
     public void getURIForTemplateWithoutIndexAndType() {
         Search search = new Search.TemplateBuilder("").build();
-        assertEquals("_all/_search/template", search.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("_all/_search/template", search.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
     public void getURIForTemplateWithIndexAndType() {
         Search search = new Search.TemplateBuilder("").addIndex("twitter").addType("tweet").build();
-        assertEquals("twitter/tweet/_search/template", search.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("twitter/tweet/_search/template", search.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
     public void getURIWithVersion() {
         Search search = new Search.VersionBuilder("").addIndex("twitter").addType("tweet").build();
-        assertTrue("Version Parameter missing", search.getURI(ElasticsearchVersion.UNKNOWN).contains("version=true"));
+        assertTrue("Version Parameter missing", search.getURI(ElasticSearchVersion.UNKNOWN).contains("version=true"));
     }
 
     @Test

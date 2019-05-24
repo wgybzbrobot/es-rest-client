@@ -3,7 +3,7 @@ package com.jusdt.es.common.core;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -13,8 +13,8 @@ import java.util.Objects;
 /**
  * @author cihat.keser
  */
-public class BulkResult extends JestResult {
-    public BulkResult(JestResult source) {
+public class BulkResult extends QueryResult {
+    public BulkResult(QueryResult source) {
         super(source);
     }
 

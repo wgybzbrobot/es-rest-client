@@ -2,7 +2,7 @@ package com.jusdt.es.client.indices;
 
 import com.google.gson.JsonObject;
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.indices.Stats;
 
 import org.elasticsearch.test.ESIntegTestCase;
@@ -27,7 +27,7 @@ public class StatsIntegrationTest extends AbstractIntegrationTest {
         ensureSearchable(INDEX_NAME);
 
         Stats stats = new Stats.Builder().build();
-        JestResult result = client.execute(stats);
+        QueryResult result = client.execute(stats);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         // confirm that response has all the default stats types
@@ -51,7 +51,7 @@ public class StatsIntegrationTest extends AbstractIntegrationTest {
                 .indexing(true)
                 .build();
 
-        JestResult result = client.execute(stats);
+        QueryResult result = client.execute(stats);
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         // Confirm that response has only flush and indexing stats types

@@ -3,7 +3,7 @@ package com.jusdt.es.common.indices.script;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.indices.script.GetStoredScript;
 
 import static com.jusdt.es.common.indices.script.ScriptLanguage.JAVASCRIPT;
@@ -32,12 +32,12 @@ public class GetStoredScriptTest {
 
     @Test
     public void scriptingLanguageIsSetIntoPath() {
-        assertThat(script.buildURI(ElasticsearchVersion.UNKNOWN), containsString("/_scripts/"));
+        assertThat(script.buildURI(ElasticSearchVersion.UNKNOWN), containsString("/_scripts/"));
     }
 
     @Test
     public void nameOfTheScriptIsSetIntoPath() {
-        assertThat(script.buildURI(ElasticsearchVersion.UNKNOWN), containsString("/_scripts/" + A_NAME));
+        assertThat(script.buildURI(ElasticSearchVersion.UNKNOWN), containsString("/_scripts/" + A_NAME));
     }
 
 }

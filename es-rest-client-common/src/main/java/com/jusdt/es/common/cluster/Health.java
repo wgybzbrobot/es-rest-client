@@ -1,115 +1,118 @@
 package com.jusdt.es.common.cluster;
 
-import com.google.common.base.Preconditions;
-import com.jusdt.es.common.action.AbstractMultiIndexActionBuilder;
-import com.jusdt.es.common.action.GenericResultAbstractAction;
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
-import com.jusdt.es.common.strings.StringUtils;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-/**
- * @author Dogukan Sonmez
- * @author Neil Gentleman
- */
+import com.google.common.base.Preconditions;
+import com.jusdt.es.common.action.AbstractMultiIndexActionBuilder;
+import com.jusdt.es.common.action.GenericResultAbstractAction;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
+import com.jusdt.es.common.strings.StringUtils;
+
 public class Health extends GenericResultAbstractAction {
-    public enum Status {
-        RED("red"), YELLOW("yellow"), GREEN("green");
 
-        private final String key;
+	public enum Status {
 
-        Status(String key) {
-            this.key = key;
-        }
+		RED("red"), YELLOW("yellow"), GREEN("green");
 
-        public String getKey() {
-            return key;
-        }
-    }
+		private final String key;
 
-    public enum Level {
-        CLUSTER("cluster"), INDICES("indices"), SHARDS("shards");
+		Status(String key) {
+			this.key = key;
+		}
 
-        private final String key;
+		public String getKey() {
+			return key;
+		}
 
-        Level(String key) {
-            this.key = key;
-        }
+	}
 
-        public String getKey() {
-            return key;
-        }
-    }
+	public enum Level {
 
-    protected Health(Builder builder) {
-        super(builder);
-    }
+		CLUSTER("cluster"), INDICES("indices"), SHARDS("shards");
 
-    @Override
-    protected String buildURI(ElasticsearchVersion elasticsearchVersion) {
-        StringBuilder sb = new StringBuilder("/_cluster/health/");
+		private final String key;
 
-        try {
-            if (StringUtils.isNotBlank(indexName)) {
-                sb.append(URLEncoder.encode(indexName, CHARSET));
-            }
-        } catch (UnsupportedEncodingException e) {
-            // unless CHARSET is overridden with a wrong value in a subclass,
-            // this exception won't be thrown.
-            log.error("Error occurred while adding index to uri", e);
-        }
+		Level(String key) {
+			this.key = key;
+		}
 
-        return sb.toString();
-    }
+		public String getKey() {
+			return key;
+		}
 
-    @Override
-    public String getRestMethodName() {
-        return "GET";
-    }
+	}
 
-    public static class Builder extends AbstractMultiIndexActionBuilder<Health, Builder> {
-        public Builder waitForNoRelocatingShards() {
-            return waitForNoRelocatingShards(true);
-        }
+	protected Health(Builder builder) {
+		super(builder);
+	}
 
-        public Builder waitForNoRelocatingShards(boolean wait) {
-            return setParameter("wait_for_no_relocating_shards", wait);
-        }
+	@Override
+	protected String buildURI(ElasticSearchVersion elasticsearchVersion) {
+		StringBuilder sb = new StringBuilder("/_cluster/health/");
 
-        public Builder waitForStatus(Status status) {
-            return waitForStatus(status.getKey());
-        }
+		try {
+			if (StringUtils.isNotBlank(indexName)) {
+				sb.append(URLEncoder.encode(indexName, CHARSET));
+			}
+		} catch (UnsupportedEncodingException e) {
+			// unless CHARSET is overridden with a wrong value in a subclass,
+			// this exception won't be thrown.
+			log.error("Error occurred while adding index to uri", e);
+		}
 
-        private Builder waitForStatus(String status) {
-            return setParameter("wait_for_status", status);
-        }
+		return sb.toString();
+	}
 
-        public Builder level(Level level) {
-            return level(level.getKey());
-        }
+	@Override
+	public String getRestMethodName() {
+		return "GET";
+	}
 
-        private Builder level(String level) {
-            return setParameter("level", level);
-        }
+	public static class Builder extends AbstractMultiIndexActionBuilder<Health, Builder> {
 
-        public Builder local(boolean local) {
-            return setParameter("local", local);
-        }
+		public Builder waitForNoRelocatingShards() {
+			return waitForNoRelocatingShards(true);
+		}
 
-        public Builder local() {
-            return local(true);
-        }
+		public Builder waitForNoRelocatingShards(boolean wait) {
+			return setParameter("wait_for_no_relocating_shards", wait);
+		}
 
-        public Builder timeout(int seconds) {
-            Preconditions.checkArgument(seconds >= 0, "seconds must not be negative");
-            return setParameter("timeout", seconds + "s");
-        }
+		public Builder waitForStatus(Status status) {
+			return waitForStatus(status.getKey());
+		}
 
-        @Override
-        public Health build() {
-            return new Health(this);
-        }
-    }
+		private Builder waitForStatus(String status) {
+			return setParameter("wait_for_status", status);
+		}
+
+		public Builder level(Level level) {
+			return level(level.getKey());
+		}
+
+		private Builder level(String level) {
+			return setParameter("level", level);
+		}
+
+		public Builder local(boolean local) {
+			return setParameter("local", local);
+		}
+
+		public Builder local() {
+			return local(true);
+		}
+
+		public Builder timeout(int seconds) {
+			Preconditions.checkArgument(seconds >= 0, "seconds must not be negative");
+			return setParameter("timeout", seconds + "s");
+		}
+
+		@Override
+		public Health build() {
+			return new Health(this);
+		}
+
+	}
 
 }

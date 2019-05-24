@@ -2,7 +2,7 @@ package com.jusdt.es.common.core;
 
 import org.junit.Test;
 
-import com.jusdt.es.common.client.config.ElasticsearchVersion;
+import com.jusdt.es.common.client.config.ElasticSearchVersion;
 import com.jusdt.es.common.core.Cat;
 
 import static org.junit.Assert.assertEquals;
@@ -21,24 +21,24 @@ public class CatIndicesBuilderTest {
     @Test
     public void shouldGenerateValidUriWhenIndexNotGiven() {
         Cat cat = new Cat.IndicesBuilder().build();
-        assertEquals("_cat/indices/_all", cat.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("_cat/indices/_all", cat.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
     public void shouldGenerateValidUriWhenIndexGiven() {
         Cat cat = new Cat.IndicesBuilder().addIndex("testIndex").build();
-        assertEquals("_cat/indices/testIndex", cat.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("_cat/indices/testIndex", cat.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
     public void shouldGenerateValidUriWhenIndexAndTypeGiven() {
         Cat cat = new Cat.IndicesBuilder().addIndex("testIndex").addType("testType").build();
-        assertEquals("_cat/indices/testIndex/testType", cat.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("_cat/indices/testIndex/testType", cat.getURI(ElasticSearchVersion.UNKNOWN));
     }
 
     @Test
     public void shouldGenerateValidUriWhenParameterGiven() {
         Cat cat = new Cat.IndicesBuilder().setParameter("v", "true").build();
-        assertEquals("_cat/indices/_all?v=true", cat.getURI(ElasticsearchVersion.UNKNOWN));
+        assertEquals("_cat/indices/_all?v=true", cat.getURI(ElasticSearchVersion.UNKNOWN));
     }
 }

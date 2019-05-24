@@ -2,7 +2,7 @@ package com.jusdt.es.client.cluster;
 
 import com.google.common.collect.ImmutableMap;
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.cluster.TasksInformation;
 import com.jusdt.es.common.indices.reindex.Reindex;
 
@@ -40,11 +40,11 @@ public class TaskInformationIntegrationTest extends AbstractIntegrationTest {
         ImmutableMap<String, Object> source = ImmutableMap.of("index", sourceIndex);
         ImmutableMap<String, Object> dest = ImmutableMap.of("index", destIndex);
         Reindex reindex = new Reindex.Builder(source, dest).refresh(true).waitForCompletion(false).build();
-        JestResult result = client.execute(reindex);
+        QueryResult result = client.execute(reindex);
 
         String task = (String) result.getValue("task");
         assertNotNull(task);
-        JestResult taskInformation = client.execute(new TasksInformation.Builder().task(task).build());
+        QueryResult taskInformation = client.execute(new TasksInformation.Builder().task(task).build());
         Boolean completed = (Boolean) taskInformation.getValue("completed");
         assertNotNull(completed);
     }

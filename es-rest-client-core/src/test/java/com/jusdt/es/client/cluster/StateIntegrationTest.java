@@ -2,7 +2,7 @@ package com.jusdt.es.client.cluster;
 
 import com.google.gson.JsonObject;
 import com.jusdt.es.client.common.AbstractIntegrationTest;
-import com.jusdt.es.common.client.JestResult;
+import com.jusdt.es.common.client.QueryResult;
 import com.jusdt.es.common.cluster.State;
 
 import org.elasticsearch.test.ESIntegTestCase;
@@ -25,7 +25,7 @@ public class StateIntegrationTest extends AbstractIntegrationTest {
         createIndex(index1, index2, index3);
         ensureSearchable(index1, index2, index3);
 
-        JestResult result = client.execute(new State.Builder().indices(index2).build());
+        QueryResult result = client.execute(new State.Builder().indices(index2).build());
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         JsonObject resultJson = result.getJsonObject();
@@ -44,7 +44,7 @@ public class StateIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     public void clusterStateWithMetadata() throws IOException {
-        JestResult result = client.execute(new State.Builder().withMetadata().build());
+        QueryResult result = client.execute(new State.Builder().withMetadata().build());
         assertTrue(result.getErrorMessage(), result.isSucceeded());
 
         JsonObject resultJson = result.getJsonObject();
